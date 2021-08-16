@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> -->
 
-  <title>Monthly-Payment-New</title>
+  <title>Monthly-Payment-Edit</title>
 
   <!-- Template CSS -->
   
@@ -49,6 +49,7 @@
                 else
                 {
                     $.each(data,function(i,value){
+                        $("#inputNewSiteID").val(value.siteID);
                         $("#inputOldSiteID").val(value.oldID);
                         $("#inputStatus").val(value.status);
                         $("#inputContact").val(value.contact);
@@ -59,8 +60,6 @@
                         $("#inputContactHide").val(value.contact);
                         $("#inputAddressHide").val(value.address);
                         $("#inputFullNameHide").val(value.fullname);
-                        $("#inputIDHide").val(value.id);
-                        $("#inputNetFee").val(value.netFee);
                         
                     
                     });
@@ -78,13 +77,12 @@
         // $("#datetimepicker").val($year+"-"+$month+"+"-01");
         var dt = new Date($("#datetimepicker").val());
         var year= dt.getFullYear();
-        var month = (dt.getMonth() < 10 ? '0' : '') + (dt.getMonth()+1);
+        var month = (dt.getMonth() < 9 ? '0' : '') + (dt.getMonth()+1);
+        //alert(month);
         //alert(year+"-"+month+"-01");
         $("#datetimepicker").val(year+"-"+month+"-01");
     });
-    $("#datetimepicker").focusout(function(){
-        $("#datetimepicker").val($.datepicker.formatDate('M yy', new Date()));
-    });
+   
     });
 </script>
   
@@ -96,12 +94,13 @@
   
 <!-- main content start -->
 <div class="main-content">
-<form action="{{ url('/monthly-payment/store')}}" method="post">
+
     <!-- content -->
-    @csrf
+           
     <div class="container-fluid content-top-gap">
-    <input type="hidden" name="userCreated" value={{ Auth::user()->id }}>
-    <input type="hidden" name="siteID" id="inputIDHide">
+          
+    <form action="{{ url('/monthly-payment/update')}}" method="post">
+        @csrf
         <!-- breadcrumbs -->
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb my-breadcrumb">
@@ -113,17 +112,6 @@
         <!-- //breadcrumbs -->
         <!-- forms -->
         <section class="forms">
-        @if($errors->any())
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input <br><br>
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-
-                </ul>
-            </div>
-            @endif
             <!-- forms 1 -->
             <!-- <div class="card card_border py-2 mb-4">
                 <div class="cards__heading">
@@ -154,63 +142,78 @@
             <!-- //forms 1 -->
 
             <!-- forms 1 -->
+            @if($errors->any())
+                    <div class="alert alert-danger">
+                        <strong>Whoops!</strong> There were some problems with your input <br><br>
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+
+                        </ul>
+                    </div>
+            @endif
             <div class="card card_border py-2 mb-4">
+                
+
                 <div class="cards__heading">
                     <h3>Site Information<span></span></h3>
                 </div>
                 <div class="card-body">
-                    <form action="#" method="post">
+                   
+                        <input type="hidden" name="id" value="{{$monthlyPayment->id}}">
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label for="inputNewSiteID" class="input__label" id="NewSiteID">New Site ID</label>
-                                <input type="text" class="form-control input-style" name="newID" id="inputNewSiteID"
-                                    placeholder="New Site ID" value="{{old('newID')}}">
+                                <input type="text" class="form-control input-style" value="{{$monthlyPayment->newID}}" id="inputNewSiteID" name="newID"
+                                disabled="true" placeholder="New Site ID">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputOldSiteID" class="input__label">Old Site ID</label>
-                                <input type="text" class="form-control input-style" id="inputOldSiteID"
-                                    readonly value="{{old('oldID')}}" name="oldID">
+                                <input type="text" class="form-control input-style" id="inputOldSiteID" name="oldID"
+                                disabled="true" value="{{$monthlyPayment->oldID}}" >
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputEmail4" class="input__label">Status</label>
-                                <input type="text" class="form-control input-style" id="inputStatus"
-                                 value="{{old('status')}}" name="status" readonly>
+                                <input type="text" class="form-control input-style" id="inputStatus" value="{{$monthlyPayment->status}}" name="status"
+                                disabled="true">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputEmail4" class="input__label">Owner's Full Name</label>
-                                <input type="text" class="form-control input-style" id="inputFullName"
-                                 value="{{old('fullname')}}" name="fullname" readonly>
+                                <input type="text" class="form-control input-style" id="inputFullName" name="fullname"
+                                disabled="true" value="{{$monthlyPayment->fullname}}">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputEmail4" class="input__label">Contact</label>
-                                <input type="text" class="form-control input-style" id="inputContact"
-                                 value="{{old('contact')}}" name="contact" readonly>
+                                <input type="text" class="form-control input-style" id="inputContact" name="contact"
+                                disabled="true" value="{{$monthlyPayment->contact}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputAddress" class="input__label">Site Address</label>
-                            <input type="text" class="form-control input-style" id="inputAddress"
-                             value="{{old('address')}}" name="address" readonly>
+                            <input type="text" class="form-control input-style" id="inputAddress" name="address"
+                            disabled="true" value="{{$monthlyPayment->address}}">
                         </div>
 
 
                         <!-- hidden -->
-                      
-                                <!-- <input type="hidden" name="oldID" class="form-control input-style" id="inputOldSiteIDHide"
+                                <input type="hidden" name="newID" class="form-control input-style" value="{{$monthlyPayment->newID}}" id="inputnewSiteIDHide"
+                                    >
+                                <input type="hidden" name="oldID" class="form-control input-style" value="{{$monthlyPayment->oldID}}" id="inputOldSiteIDHide"
                                     >
                                
-                                <input type="hidden" name="status" class="form-control input-style" id="inputStatusHide"
+                                <input type="hidden" name="status" class="form-control input-style" value="{{$monthlyPayment->status}}" id="inputStatusHide"
                                 >
                               
-                                <input type="hidden" name="fullname" class="form-control input-style" id="inputFullNameHide"
+                                <input type="hidden" name="fullname" class="form-control input-style" value="{{$monthlyPayment->fullname}}" id="inputFullNameHide"
                                >
                           
-                                <input type="hidden" name="contact" class="form-control input-style" id="inputContactHide"
+                                <input type="hidden" name="contact" class="form-control input-style" id="inputContactHide" value="{{$monthlyPayment->contact}}"
                                 >
                             
                         
-                            <input type="hidden" name="address" class="form-control input-style" id="inputAddressHide"
-                           > -->
+                            <input type="hidden" name="address" class="form-control input-style" id="inputAddressHide" value="{{$monthlyPayment->address}}"
+                           >
                        
                     
                 </div>
@@ -224,8 +227,8 @@
                     <h3>Payment Information<span></span></h3>
                 </div>
                 <div class="card-body">
-                    <form action="#" method="post">
-                        <div class="row">
+                    <!-- <form action="#" method="post"> -->
+                    <div class="row">
                             <div class="form-group col-md-3">
                                 <label for="inputNetFee" class="input__label">Net Fee</label>
                                 <input type="number" name="netFee" class="form-control input-style" id="inputNetFee"
@@ -238,10 +241,8 @@
                             <div class="form-group">
                                <label for="datetimepicker" class="input__label">Payment Month</label>
                                 <div class='input-group date' >
-                                    <input type='date' name="paymonth" value="{{old('paymonth')}}"  id='datetimepicker' class="form-control input-style" /> 
-                                    
+                                    <input type='date'    value="{{$monthlyPayment->paymonth}}" name="paymonth" id='datetimepicker' class="form-control input-style" /> 
                                 </div>
-                                <span style="color:red">@error('paymonth'){{$message}}@enderror</span>
                             </div>
 
                         </section>
@@ -249,18 +250,15 @@
                             <div class="form-group">
                                <label for="datetimepicker2" class="input__label">Pay Date</label>
                                 <div class='input-group date'  >
-                                    <input type='date'  id='datetimepicker2' class="form-control input-style"  name="paydate" value="{{old('paydate')}}"/> 
-                                    
+                                    <input type='date'    id='datetimepicker2' class="form-control input-style"  name="paydate" value="{{$monthlyPayment->paydate}}"/> 
                                 </div>
-                                <span style="color:red">@error('paydate'){{$message}}@enderror</span>
                             </div>
 
                         </section>
                         <div class="form-group col-md-6">
                                 <label for="inputDescription" class="input__label">Description</label>
-                                <input type="text" name="description" class="form-control input-style" id="inputDescription"
-                                    placeholder="Description">
-                                    <span style="color:red">@error('description'){{$message}}@enderror</span>
+                                <input type="text" value="{{$monthlyPayment->description}}" class="form-control input-style" id="inputDescription"
+                                      placeholder="Description" name="description">
                         </div>
                        
                         
@@ -268,8 +266,8 @@
                         
                         <div class="form-group">
                             <label for="inputRemark" class="input__label">Remark</label>
-                            <input type="text" name="remark" class="form-control input-style" id="inputRemark"
-                                placeholder="Remark">
+                            <input type="text" value="{{$monthlyPayment->remark}}" class="form-control input-style" id="inputRemark"
+                                name="remark"  placeholder="Remark">
                         </div>
                         <!-- <div class="form-row">
                             <div class="form-group col-md-6">
@@ -316,8 +314,8 @@
 
         </section>
         <!-- //forms -->
-        </section>
-        <!-- //forms  -->
+       
+        
 
     </div>
     <!-- //content -->

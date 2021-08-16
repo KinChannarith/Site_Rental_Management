@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Site;
+use App\Models\MonthlyPayment;
 use Illuminate\Http\Request;
-
+use DB;
 class HomeController extends Controller
 {
     /**
@@ -23,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      
+        //$record = DB::table('monthlypayments')->select(DB::raw('select count(*) AS total'));
+        // $record = DB::table('sites')->where('isDeleted',0);
+        $record=Site::where('isDeleted',0)->paginate(5);
+        $payInMonth = MonthlyPayment::where('isDeleted',0)->where('paymonth','=','2021-08-01')->paginate(5);
+        return view("welcome",compact('record','payInMonth'));
     }
 }

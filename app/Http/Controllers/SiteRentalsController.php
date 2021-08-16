@@ -127,45 +127,62 @@ class SiteRentalsController extends Controller
     }
     public function update(Request $req)
     {
-        $req->validate([
-            'newID'=>['required'],
-            'status'=>'required',
-            'address'=>'required',
-            'fullname'=>'required',
-             'contact'=>'required',
-             'ownerAddress'=>'required',
-             'startDate'=>'required',
-             'endDate'=>'required',
-             'noYear'=>'required',
-             'netFee'=>'required',
-             'pmtMethod'=>'required',
-             'dueDate'=>'required'
- 
-        ]);
+        $sites=Site::where('newID',$req->newID);
+        // $rules = Site::$rules;
+        // $rules['newID'] = $rules['newID'] . ',id,' . $id;
+        // $validationCertificate  = Validator::make($input, $rules); 
+        $sitesID=Site::where('newID',$req->newID)->where('id',$req->id);
+        if($sites->count()>0 && $sitesID->count()>0)
+        { 
+                $req->validate([
+                'newID'=>['required'],
+                'status'=>'required',
+                'address'=>'required',
+                'fullname'=>'required',
+                'contact'=>'required',
+                'ownerAddress'=>'required',
+                'startDate'=>'required',
+                'endDate'=>'required',
+                'noYear'=>'required',
+                'netFee'=>'required',
+                'pmtMethod'=>'required',
+                'dueDate'=>'required'
 
-        $data = Site::find($req->id);
-        $data->newID = $req->newID;
-        $data->oldID = $req->oldID;
-        $data->status = $req->status;
-        $data->address = $req->address;
-        $data->initialStatus = $req->initialStatus;
-        $data->fullname = $req->fullname;
-        $data->contact = $req->contact;
-        $data->ownerAddress = $req->ownerAddress;
-        $data->bankName = $req->bankName;
-        $data->bankAccountName = $req->bankAccountName;
-        $data->bankAccountNumber = $req->bankAccountNumber;
-        $data->startDate = $req->startDate;
-        $data->endDate = $req->endDate;
-        $data->noYear = $req->noYear;
-        $data->netFee = $req->netFee;
-        $data->pmtMethod = $req->pmtMethod;
-        $data->dueDate = $req->dueDate;
-        $data->remark = $req->remark;
-        $data->lastUserEdited = Auth::user()->id;
-        $data->save();
-        return redirect()->route('site-rental.Index')
-        ->with('success','Site updated successfully!');
+            ]);
+
+            $data = Site::find($req->id);
+            $data->newID = $req->newID;
+            $data->oldID = $req->oldID;
+            $data->status = $req->status;
+            $data->address = $req->address;
+            $data->initialStatus = $req->initialStatus;
+            $data->fullname = $req->fullname;
+            $data->contact = $req->contact;
+            $data->ownerAddress = $req->ownerAddress;
+            $data->bankName = $req->bankName;
+            $data->bankAccountName = $req->bankAccountName;
+            $data->bankAccountNumber = $req->bankAccountNumber;
+            $data->startDate = $req->startDate;
+            $data->endDate = $req->endDate;
+            $data->noYear = $req->noYear;
+            $data->netFee = $req->netFee;
+            $data->pmtMethod = $req->pmtMethod;
+            $data->dueDate = $req->dueDate;
+            $data->remark = $req->remark;
+            $data->lastUserEdited = Auth::user()->id;
+           
+            //  $data->save();
+             return redirect()->route('site-rental.Index')
+             ->with('success','Site updated successfully!');
+         
+        }
+        elseif($sites->count()>0 && $sitesID->count()==0)
+        {
+            return redirect()->route('site-rental.Edit',$req->id)
+            ->with('message',"New Site ID must be unique.");
+        }
+
+        
         
     }
     public function view($id)

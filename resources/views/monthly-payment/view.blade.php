@@ -59,8 +59,6 @@
                         $("#inputContactHide").val(value.contact);
                         $("#inputAddressHide").val(value.address);
                         $("#inputFullNameHide").val(value.fullname);
-                        $("#inputIDHide").val(value.id);
-                        $("#inputNetFee").val(value.netFee);
                         
                     
                     });
@@ -72,19 +70,7 @@
        
 
     });
-    $("#datetimepicker").change(function(){
-        // $year= $("#datetimepicker").Year();
-        // $month=$("#datetimepicker").Month();
-        // $("#datetimepicker").val($year+"-"+$month+"+"-01");
-        var dt = new Date($("#datetimepicker").val());
-        var year= dt.getFullYear();
-        var month = (dt.getMonth() < 10 ? '0' : '') + (dt.getMonth()+1);
-        //alert(year+"-"+month+"-01");
-        $("#datetimepicker").val(year+"-"+month+"-01");
-    });
-    $("#datetimepicker").focusout(function(){
-        $("#datetimepicker").val($.datepicker.formatDate('M yy', new Date()));
-    });
+   
     });
 </script>
   
@@ -101,7 +87,6 @@
     @csrf
     <div class="container-fluid content-top-gap">
     <input type="hidden" name="userCreated" value={{ Auth::user()->id }}>
-    <input type="hidden" name="siteID" id="inputIDHide">
         <!-- breadcrumbs -->
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb my-breadcrumb">
@@ -113,17 +98,6 @@
         <!-- //breadcrumbs -->
         <!-- forms -->
         <section class="forms">
-        @if($errors->any())
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input <br><br>
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-
-                </ul>
-            </div>
-            @endif
             <!-- forms 1 -->
             <!-- <div class="card card_border py-2 mb-4">
                 <div class="cards__heading">
@@ -163,40 +137,40 @@
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label for="inputNewSiteID" class="input__label" id="NewSiteID">New Site ID</label>
-                                <input type="text" class="form-control input-style" name="newID" id="inputNewSiteID"
-                                    placeholder="New Site ID" value="{{old('newID')}}">
+                                <input type="text" class="form-control input-style" value="{{$monthlyPayment->newID}}" id="inputNewSiteID"
+                                   disabled="true" placeholder="New Site ID">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputOldSiteID" class="input__label">Old Site ID</label>
                                 <input type="text" class="form-control input-style" id="inputOldSiteID"
-                                    readonly value="{{old('oldID')}}" name="oldID">
+                                    disabled="true" value="{{$monthlyPayment->oldID}}" >
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputEmail4" class="input__label">Status</label>
-                                <input type="text" class="form-control input-style" id="inputStatus"
-                                 value="{{old('status')}}" name="status" readonly>
+                                <input type="text" class="form-control input-style" id="inputStatus" value="{{$monthlyPayment->status}}"
+                                disabled="true">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputEmail4" class="input__label">Owner's Full Name</label>
                                 <input type="text" class="form-control input-style" id="inputFullName"
-                                 value="{{old('fullname')}}" name="fullname" readonly>
+                                disabled="true" value="{{$monthlyPayment->fullname}}">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputEmail4" class="input__label">Contact</label>
                                 <input type="text" class="form-control input-style" id="inputContact"
-                                 value="{{old('contact')}}" name="contact" readonly>
+                                disabled="true" value="{{$monthlyPayment->contact}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputAddress" class="input__label">Site Address</label>
                             <input type="text" class="form-control input-style" id="inputAddress"
-                             value="{{old('address')}}" name="address" readonly>
+                            disabled="true" value="{{$monthlyPayment->address}}">
                         </div>
 
 
                         <!-- hidden -->
                       
-                                <!-- <input type="hidden" name="oldID" class="form-control input-style" id="inputOldSiteIDHide"
+                                <input type="hidden" name="oldID" class="form-control input-style" id="inputOldSiteIDHide"
                                     >
                                
                                 <input type="hidden" name="status" class="form-control input-style" id="inputStatusHide"
@@ -210,7 +184,7 @@
                             
                         
                             <input type="hidden" name="address" class="form-control input-style" id="inputAddressHide"
-                           > -->
+                           >
                        
                     
                 </div>
@@ -225,23 +199,13 @@
                 </div>
                 <div class="card-body">
                     <form action="#" method="post">
-                        <div class="row">
-                            <div class="form-group col-md-3">
-                                <label for="inputNetFee" class="input__label">Net Fee</label>
-                                <input type="number" name="netFee" class="form-control input-style" id="inputNetFee"
-                                    placeholder="Net Fee" readonly>
-                                    <span style="color:red">@error('netfee'){{$message}}@enderror</span>
-                            </div>
-                        </div>
                         <div class="form-row">
                         <section class="col-md-3">
                             <div class="form-group">
                                <label for="datetimepicker" class="input__label">Payment Month</label>
                                 <div class='input-group date' >
-                                    <input type='date' name="paymonth" value="{{old('paymonth')}}"  id='datetimepicker' class="form-control input-style" /> 
-                                    
+                                    <input type='text'  disabled="true" value="{{$monthlyPayment->paymonth}}" name="paymonth" id='datetimepicker' class="form-control input-style" /> 
                                 </div>
-                                <span style="color:red">@error('paymonth'){{$message}}@enderror</span>
                             </div>
 
                         </section>
@@ -249,18 +213,15 @@
                             <div class="form-group">
                                <label for="datetimepicker2" class="input__label">Pay Date</label>
                                 <div class='input-group date'  >
-                                    <input type='date'  id='datetimepicker2' class="form-control input-style"  name="paydate" value="{{old('paydate')}}"/> 
-                                    
+                                    <input type='text'  disabled="true" id='datetimepicker2' class="form-control input-style"  name="paydate" value="{{$monthlyPayment->paydate}}"/> 
                                 </div>
-                                <span style="color:red">@error('paydate'){{$message}}@enderror</span>
                             </div>
 
                         </section>
                         <div class="form-group col-md-6">
                                 <label for="inputDescription" class="input__label">Description</label>
-                                <input type="text" name="description" class="form-control input-style" id="inputDescription"
-                                    placeholder="Description">
-                                    <span style="color:red">@error('description'){{$message}}@enderror</span>
+                                <input type="text" value="{{$monthlyPayment->description}}" class="form-control input-style" id="inputDescription"
+                                    disabled="true" placeholder="Description">
                         </div>
                        
                         
@@ -268,8 +229,8 @@
                         
                         <div class="form-group">
                             <label for="inputRemark" class="input__label">Remark</label>
-                            <input type="text" name="remark" class="form-control input-style" id="inputRemark"
-                                placeholder="Remark">
+                            <input type="text" value="{{$monthlyPayment->remark}}" class="form-control input-style" id="inputRemark"
+                                disabled="true" placeholder="Remark">
                         </div>
                         <!-- <div class="form-row">
                             <div class="form-group col-md-6">
@@ -304,12 +265,7 @@
                 <div class="col-md-9">
                     
                 </div>
-                <div class="col-md-1">
-                    <button type="submit" class="btn btn-success btn-style">Save</button>
-                </div>
-                <div class="col-md-1">
-                    <button type="submit" class="btn btn-danger btn-style btn-border">Cancel</button>
-                </div>
+               
                 
             </div>
            

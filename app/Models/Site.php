@@ -9,6 +9,9 @@ class Site extends Model
 {
     use HasFactory;
     protected $table="sites";
+    protected $rules = [
+        'newID' => 'sometimes|required|text|unique:sites'
+    ];
     protected $fillable=[
         'newID','oldID','status','address','initialStatus','fullname',
         'contact','ownerAddress','bankName','bankAccountName',

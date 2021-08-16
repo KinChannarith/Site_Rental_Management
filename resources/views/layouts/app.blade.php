@@ -68,10 +68,10 @@
             <span>Monthly Payment<i class="lnr lnr-chevron-right"></i></span></a>
         <ul class="sub-menu-list">
             <li><a href="{{ route('monthly-payment.Create') }}"><i class="fa fa-plus"></i>Create</a> </li>
-            <li><a href="cards.html"><i class="fa fa-list"></i>List</a> </li>
+            <li><a href="{{ route('monthly-payment.Index') }}"><i class="fa fa-list"></i>List</a> </li>
         </ul>
         </li>
-        <li><a href="forms.html"><i class="fa fa-file-text"></i> <span>Report</span></a></li>
+        <li><a href="{{ route('report.Index') }}"><i class="fa fa-file-text"></i> <span>Report</span></a></li>
     </ul>
     <!-- //sidebar nav end -->
     <!-- toggle button start -->

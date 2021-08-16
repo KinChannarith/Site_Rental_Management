@@ -46,6 +46,7 @@
         <!-- //breadcrumbs -->
         <!-- forms -->
         <section class="forms">
+            
             @if($errors->any())
             <div class="alert alert-danger">
                 <strong>Whoops!</strong> There were some problems with your input <br><br>
@@ -57,6 +58,12 @@
                 </ul>
             </div>
             @endif
+            @if ($message = Session::get('message'))
+                            <div class="alert alert-danger">
+                            <p>{{ $message }}</p>
+                            </div>
+              @endif
+           
    
             <!-- forms 1 -->
             <!-- <div class="card card_border py-2 mb-4">
@@ -99,7 +106,7 @@
                                 <label for="inputSiteID" class="input__label">New Site ID</label>
                                 <input type="text" class="form-control input-style" name="newID"
                                     value="{{$site->newID}}"
-                                    placeholder="New Site ID" readonly >
+                                    placeholder="New Site ID" >
                                 </input>
                                 <span style="color:red">@error('newID'){{$message}}@enderror</span>
                             </div>
