@@ -1,0 +1,51 @@
+<template>
+    <div>
+        <h2>Sites</h2>
+       
+    </div>
+</template>
+<script>
+    export default{
+        data(){
+            return{
+                sites:[],
+                site:{
+                    id:'',
+                    newID:'',
+                    oldID:'',
+                    startDate:'',
+                    endDate:'',
+                    contactNo:'',
+                    paymentTerm:'',
+                    siteOwner:'',
+                    vendorName:'',
+                    vattin:'',
+                    location:'',
+                    contructionDate:'',
+                    siteStatus:'',
+                    changeDate:'',
+                    netFee:'',
+                    FRAIDate:'',
+                    tenant:'',
+                    additionalFee:'',
+                    additionalService:''
+                },
+                site_id: '',
+                pagination:{},
+                edit: false
+            }
+        },
+        created(){
+            this.fetchSites();
+        },
+        methods:{
+            fetchSites(){
+               fetch('sites')
+               .then(res=>res.json())
+               .then(res=>{
+                console.log(res.data);
+               }) 
+            }
+        }
+    }
+</script>

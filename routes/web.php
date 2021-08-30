@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use App\Models\Site;
+//API
+use App\Http\Resources\SiteCollection;
+Route::get('/sites', function () {
+    return new SiteCollection(Site::all());
+});
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,10 +30,11 @@ use App\Models\Site;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\SiteRentalsController::class, 'index'])->name('site-rental.Index');
 // Route::get('/', [App\Http\Controllers\SiteRentalsController::class, 'index'])->name('site-rental.Index');
 Auth::routes();
-
+Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('Logout');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/site-rental/index', [App\Http\Controllers\SiteRentalsController::class, 'index'])->name('site-rental.Index');
 Route::get('/site-rental/create', [App\Http\Controllers\SiteRentalsController::class, 'create'])->name('site-rental.Create');
@@ -52,3 +58,15 @@ Route::post('/monthly-payment/update', [App\Http\Controllers\MonthlyPaymentsCont
 
 Route::get('/report/index', [App\Http\Controllers\ReportsController::class, 'index'])->name('report.Index');
 Route::get('/report/index/exportIntoExcel', [App\Http\Controllers\MonthlyPaymentsController::class, 'exportIntoExcel'])->name('monthly-payment.ExportIntoExcel');
+Route::get('/site-rental-payment/index', [App\Http\Controllers\SiteRentalPaymentsController::class, 'index'])->name('site-rental-payment.Index');
+Route::get('/site-rental-payment/detail', [App\Http\Controllers\SiteRentalPaymentsController::class, 'detail'])->name('site-rental-payment.Detail');
+
+Route::get('/vendor-list/list', [App\Http\Controllers\VendorsController::class, 'index'])->name('vendor-list.Index');
+Route::get('/vendor-list/create', [App\Http\Controllers\VendorsController::class, 'create'])->name('vendor-list.Create');
+Route::resource('/vendor-list/store', App\Http\Controllers\VendorsController::class);
+Route::post('/vendor-list/update', [App\Http\Controllers\VendorsController::class, 'update'])->name('vendor-list.Update');
+
+Route::get('/site-rental-payment-report/index', [App\Http\Controllers\SiteRentalPaymentReportsController::class, 'index'])->name('site-rental-payment-report.Index');
+
+
+

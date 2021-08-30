@@ -1,18 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\Site;
 use DB;
 use Illuminate\Support\Facades\Auth;
-class SiteRentalsController extends Controller
+class SiteRentalPaymentsController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
     }
-    public function index(Request $request)
+    public function detail(Request $request)
     {
         $search = $request->input('search');
         $filter = $request->input('filter');
@@ -56,12 +56,24 @@ class SiteRentalsController extends Controller
             break;
             default:
                 $sites = $sites->paginate(5);
-                return view('site-rental/list',compact('sites'));
+                return view('site-rental-payment/detail',compact('sites'));
           
                   
         }
-    //    $sites = Site::paginate(5);
-    //     return view('site-rental/list',['sites'=>$sites]);
+        
+    }
+    public function index(Request $request)
+    {
+        
+        $monthly = Site::getMonthly();
+        $quaterly = Site::getQuaterly();
+        $semesterly = Site::getSemesterly();
+        $yearly = Site::getYearly();
+       
+        // return view('site-rental/list');
+        //$sites = Site::paginate(5);
+        //dd($monthly);
+         return view('site-rental-payment/list',compact('monthly','quaterly','semesterly','yearly'));
     }
     public function create()
     {

@@ -1,6 +1,6 @@
 @extends('layouts/app')
 @section("content")
-include "Models/Site.php";
+<!-- include "Models/Site.php"; -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <?php
@@ -25,8 +25,13 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> -->
   <!-- <link rel="stylesheet" href="{{asset('assets/DataTables/datatables.css') }}"> -->
-  <link rel="stylesheet" href="assets/dataTables/datatables.min.css">
-  
+  <!-- <link rel="stylesheet" href="assets/dataTables/datatables.min.css"> -->
+  <script src="{{ asset('assets/js/jquery-1.10.2.min.js')}}"></script> 
+  <!-- <script type="text/javascript">
+      $('Link1').click(function(){
+        alert("kok");
+      });
+  </script> -->
   <title>Site-Rental-List</title>
 
   <!-- Template CSS -->
@@ -35,17 +40,16 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
   <!-- google fonts -->
   
 </head>
-<div class="container-fluid content-top-gap">
-<body class="sidebar-menu-collapsed">
-<div class="se-pre-con"></div>
-<section>
+<div class="container content-top-gap">
+<section data-navlink="Link1">
+
 <section class="forms">
 <!-- main content start -->
   <div class="main-content">
       <!-- content -->
       <div class="card card_border py-2 mb-4">
           <div class="cards__heading">
-              <h3>Site Rental List<span></span></h3>
+              <h3><b>Site Rental List</b><span></span></h3>
               
               <br/>
               @if ($message = Session::get('success'))
@@ -53,10 +57,11 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
                             <p>{{ $message }}</p>
                             </div>
               @endif
-              <div class="container">
+              <div>
                 
                 <form action="{{route('site-rental.Search')}}" method="GET">
-                <div class="form-row">
+                
+                        <div class="row">
                         <section class="col-md-2">
                             <div class="form-group">
                                <label for="datetimepicker" class="input__label">Start Date from</label>
@@ -109,47 +114,64 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
                             </div>
 
                         </section>
-                        <div class="form-group col-md-3">
-                                <label for="inputStatus" class="input__label">Status</label>
-                                <select id="inputStatus" class="form-control input-style"
-                                    name="status"
-                                   >
-                                   <option value="" ></option>
-                                   <option value="On Air" {{ $status =="On Air"? "selected" :""  }} >On Air</option>
-                                    <option value="shut down" {{ $status=="shut down"? "selected" :""  }}>shut down</option>
-                                    <option value="Status" {{ $status=="Status"? "selected" :""  }}>Status</option>
-                                    <option value="Under Installation" {{$status=="Under Installation"? "selected" :""  }}>Under Installation</option> 
-                                </select>
-                                <span style="color:red">@error('status'){{$message}}@enderror</span>
+                        <section class="col-md-4">
+                          <div class="form-group >
+                                  <label for="inputStatus" class="input__label">Status</label>
+                                  <select id="inputStatus" class="form-control input-style"
+                                      name="status"
+                                    >
+                                    <option value="" ></option>
+                                    <option value="On Air" {{ $status =="On Air"? "selected" :""  }} >On Air</option>
+                                      <option value="shut down" {{ $status=="shut down"? "selected" :""  }}>shut down</option>
+                                      <option value="Status" {{ $status=="Status"? "selected" :""  }}>Status</option>
+                                      <option value="Under Installation" {{$status=="Under Installation"? "selected" :""  }}>Under Installation</option> 
+                                  </select>
+                                  <span style="color:red">@error('status'){{$message}}@enderror</span>
+                          </div>
+                        </section>
                         </div>
-                </div>
-                <div class="row">
+                   
+                    
+                
+              
                       
-                      <div class="form-group col-md-2">
-                                <select id="inputFilter" class="form-control input-style" 
-                                name="filter"
-                                value="<?= $filter ?>">
-                                    <option  value="NewID" {{ $filter =="NewID"? "selected" :""  }}>New ID</option>
-                                    <option value="OwnerName" {{ $filter =="OwnerName"? "selected" :""  }}>Owner Name</option>
-                                    
-                                </select>
-                                
-                            </div>
-                      <div class="col-8">
+                    
+                        <div class="row">
+                        <section class="col-md-2">
+                          <div class="form-group">
+                                  <select id="inputFilter" class="form-control input-style" 
+                                  name="filter"
+                                  value="<?= $filter ?>">
+                                      <option  value="NewID" {{ $filter =="NewID"? "selected" :""  }}>New ID</option>
+                                      <option value="OwnerName" {{ $filter =="OwnerName"? "selected" :""  }}>Owner Name</option>
+                                      
+                                  </select>
+                                  
+                          </div>
+                        </section>
+                        <section class="col-md-8">
                         <div class="form-group">
-                            <input type="text" class="form-control input-style" id="inputAddress"
-                                name="search"
-                                value="<?= $search ?>"
-                                placeholder="search">                              
+                            <div class="form-group form-group">
+                                <input type="text" class="form-control input-style" id="inputAddress"
+                                    name="search"
+                                    value="<?= $search ?>"
+                                    placeholder="search">                              
+                            </div>
                         </div>
+                        </section>
+                        <section class="col-md-2">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-style btn-border">Search</button>
                         </div>
-                      <div class="col-md-1">
-                          <button type="submit" class="btn btn-primary btn-style btn-border">Search</button>
-                      </div>
-                </div>
+                        </section>
+                        </div>
+                     
+              
+                
                 
               </form>
-              <a class='btn btn-success fa fa-plus' href="create" type='submit' value='submit'></a>
+              <a class='btn btn-success icons' href="{{ route('site-rental.Create') }}" type='submit' value='submit'>add</a>
+              
               <div class="table-responsive">
                   <table class="table table-hover table-strip" id="dataTables">
                       <thead>
@@ -173,11 +195,11 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
                           @foreach($sites as $site)
                          
                           <tr>
-                          <td><a class='btn btn-primary fa fa-eye' href="view\{{$site->id}}" type='submit' value='submit' > </a>
-                          <a class='btn btn-success fa fa-pencil' href="edit\{{$site->id}}" type='submit' value='submit'> </a>
+                          <td><a class='btn btn-primary icons' id="btnEye" href="{{ route('site-rental.View',$site->id) }}" type='submit' value='submit' >visibility</a>
+                          <a class='btn btn-success icons' href="{{ route('site-rental.Edit',$site->id) }}" type='submit' value='submit'>edit</a>
                           @csrf
                           @method('DELETE')
-                          <a class='btn btn-danger fa fa-trash' onclick="return confirm('Are you sure to delete the item?')" href="delete\{{$site->id}}" type='submit' value='submit'> </a>
+                          <a class='btn btn-danger icons' onclick="return confirm('Are you sure to delete the item?')" href="delete\{{$site->id}}" type='submit' value='submit'>delete</a>
                           </td>
                            <td>{{$site->newID}}</td>
                            <td>{{$site->oldID}}</td>
@@ -194,11 +216,11 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
                     </table>
                     <div class="container">
                       <div class="row">
-                            <div class="col-10">
+                            <div class="col-md-10">
                               <p>Total records: {{ $sites->total()}}</p>
                             </div>
                         
-                            <div class="col-2">
+                            <div class="col-md-2">
                                 {!!$sites->appends(request()->input())->links(('pagination::bootstrap-4'))!!}
                             </div>
                       </div>
@@ -221,17 +243,26 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
   <span class="fa fa-angle-up"></span>
 </button> -->
 
-<script src="assets/dataTables/datatables.min.js"></script>
+<!-- <script src="assets/dataTables/datatables.min.js"></script> -->
 </body>
-<script src="{{asset('assets/dataTables/datatables.min.js')}}"></script>
-<script src="{{asset('assets/js/datatable.js')}}"></script>
+<!-- <script src="{{asset('assets/dataTables/datatables.min.js')}}"></script>
+<script src="{{asset('assets/js/datatable.js')}}"></script> -->
 </div>
-  <script type="text/javascript" src="assets/dataTables/datatables.min.js">
+  <!-- <script type="text/javascript" src="assets/dataTables/datatables.min.js">
     $(document).ready( function () {
     $('#dataTables').DataTable();
     } );
-  </script>
+  </script> -->
+  <script src="{{ asset('assets/js/jquery-1.10.2.min.js')}}"></script> 
+<script type="text/javascript">
+			$(function(){
 
+				$('.active').removeClass('active');
+				$('#Link1').addClass('active');
+
+			});
+			
+	</script>
 
 </html>
 

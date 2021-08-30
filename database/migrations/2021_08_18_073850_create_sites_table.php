@@ -26,12 +26,19 @@ class CreateSitesTable extends Migration
             $table->string('bankName', 500)->nullable();
             $table->string('bankAccountName', 500)->nullable();
             $table->string('bankAccountNumber', 500)->nullable();
+            $table->string('contractNumber', 500)->nullable();
+            $table->string('siteOwner', 500);
             $table->datetime('startDate');
             $table->datetime('endDate');
+            $table->datetime('constructionDate');
+            $table->datetime('RFAIDate');
+            $table->string('additionalService', 500)->nullable();
             $table->string('noYear',255);
             $table->double('netFee',2)->default(0);
+            $table->double('additionalFee',2)->default(0);
             $table->integer('pmtMethod');
             $table->string('dueDate',500)->nullable();
+            $table->string('tenant', 500)->nullable();
             $table->string('remark',500)->nullable();
             $table->string('remark2',500)->nullable();
             $table->string('userCreated', 500)->nullable();
@@ -52,4 +59,3 @@ class CreateSitesTable extends Migration
         Schema::dropIfExists('sites');
     }
 }
-

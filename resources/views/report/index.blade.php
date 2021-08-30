@@ -1,6 +1,6 @@
 @extends('layouts/app')
 @section("content")
-include "Models/Site.php";
+<!-- include "Models/Site.php"; -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <?php
@@ -52,13 +52,13 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
 <!-- main content start -->
   <div class="main-content">
       <!-- content -->
-      <div class="card card_border py-2 mb-4">
-      <div class="cards__heading">
+      <div class="col-md-12">
+      
        <form  action="{{route('monthly-payment.ExportIntoExcel')}}" method="GET">
       
-            <div class="form-row">
-                    <section class="col-md-2">
-                    <div class="form-group">
+                <div class="row">
+                    
+                    <div class="form-group col-md-2">
                                     <label for="datetimepicker" class="input__label">Year</label>
                                         <div class='input-group date' id='datetimepicker'>
                                             <input type='year' class="form-control input-style"
@@ -69,10 +69,10 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
                                         <span style="color:red">@error('startDate'){{$message}}@enderror</span>
                     </div>
 
-                    </section>
+                    
                         
                         
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                                 <label for="inputStatus" class="input__label">Status</label>
                                 <select id="inputStatus" class="form-control input-style"
                                     name="status"
@@ -85,8 +85,8 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
                                 </select>
                                 <span style="color:red">@error('status'){{$message}}@enderror</span>
                         </div>
-                        <section class="col-md-3">
-                            <div class="form-group">
+                        
+                            <div class="form-group col-md-4">
                             <label for="sortBy" class="input__label">Sort By</label>
                                 <select id="sortBy" class="form-control input-style"
                                     name="sortBy">
@@ -98,8 +98,8 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
                                 </select>
                             </div>
 
-                        </section>
-            </div>
+                        
+                </div>
             
                 <div class="row">
                       
@@ -114,7 +114,7 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
                                 
                             </div>
                 
-                            <div class="col-8">
+                            <div class="form-group col-md-9">
                                 <div class="form-group">
                                     <input type="text" class="form-control input-style" id="inputAddress"
                                         name="search"
@@ -151,7 +151,16 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
 
 <script src="{{asset('assets/dataTables/datatables.min.js')}}"></script>
 <script src="{{asset('assets/js/datatable.js')}}"></script>
+<script src="{{ asset('assets/js/jquery-1.10.2.min.js')}}"></script> 
+<script type="text/javascript">
+			$(function(){
 
+				$('.active').removeClass('active');
+				$('#Link3').addClass('active');
+
+			});
+			
+	</script> 
 
 
 </html>

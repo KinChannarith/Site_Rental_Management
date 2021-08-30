@@ -31,4 +31,10 @@ class HomeController extends Controller
         $payInMonth = MonthlyPayment::where('isDeleted',0)->where('paymonth','=','2021-08-01')->paginate(5);
         return view("welcome",compact('record','payInMonth'));
     }
+    public function logout () {
+        //logout user
+        auth()->logout();
+        // redirect to homepage
+        return redirect('/');
+    }
 }

@@ -1,6 +1,6 @@
 @extends('layouts/app')
 @section("content")
-include "Models/Site.php";
+<!-- include "Models/Site.php"; -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <?php
@@ -30,7 +30,16 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
   <title>Monthly-Payment-List</title>
 
   <!-- Template CSS -->
-  
+  <script src="{{ asset('assets/js/jquery-1.10.2.min.js')}}"></script> 
+<script type="text/javascript">
+			$(function(){
+
+				$('.active').removeClass('active');
+				$('#Link2').addClass('active');
+
+			});
+			
+	</script> 
 
   <!-- google fonts -->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -87,10 +96,10 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
 </script>
   
 </head>
-<div class="container-fluid content-top-gap">
+<div class="container content-top-gap">
 <body class="sidebar-menu-collapsed">
 <div class="se-pre-con"></div>
-<section>
+<section data-navlink="Link2">
 <section class="forms">
 <!-- main content start -->
   <div class="main-content">
@@ -98,17 +107,17 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
       <div class="card card_border py-2 mb-4">
           <div class="cards__heading">
               <h3>Monthly Payment List<span></span></h3>
-              
+            </div>  
               <br/>
               @if ($message = Session::get('success'))
                             <div class="alert alert-success">
                             <p>{{ $message }}</p>
                             </div>
               @endif
-              <div class="container">
+              <div>
                 
                 <form action="{{route('monthly-payment.Index')}}" method="GET">
-                <div class="form-row">
+                <div class="row">
                         <section class="col-md-2">
                             <div class="form-group">
                                <label for="datetimepicker" class="input__label">Pay Date from</label>
@@ -135,8 +144,8 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
                             </div>
 
                         </section>
-                        <section class="col-md-3">
-                            <div class="form-group">
+                        <section>
+                            <div class="form-group col-md-2">
                                <label for="datetimepicker3" class="input__label">Pay Month/Year</label>
                                 <div class='input-group date'>
                                     <input type='date' class="form-control input-style"
@@ -148,7 +157,7 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
                             </div>
 
                         </section>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-5">
                                 <label for="inputStatus" class="input__label">Status</label>
                                 <select id="inputStatus" class="form-control input-style"
                                     name="status"
@@ -161,7 +170,7 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
                                 </select>
                                 <span style="color:red">@error('status'){{$message}}@enderror</span>
                         </div>
-                </div>
+                      </div>
                 <div class="row">
                       
                       <div class="form-group col-md-2">
@@ -173,22 +182,22 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
                                     
                                 </select>
                                 
-                            </div>
-                      <div class="col-8">
-                        <div class="form-group">
+                      </div>
+                      
+                        <div class="form-group col-md-8">
                             <input type="text" class="form-control input-style" id="inputSearch"
                                 name="search"
                                 value="<?= $search ?>"
                                 placeholder="search">                              
                         </div>
-                        </div>
-                      <div class="col-md-1">
+                        
+                      <div class="col-md-2">
                           <button type="submit" id="btnSearch" class="btn btn-primary btn-style btn-border">Search</button>
                       </div>
                 </div>
-                
+                </div>
               </form>
-              <a class='btn btn-success fa fa-plus' href="create" type='submit' value='submit'></a>
+              <a class='btn btn-success icons' href="create" type='submit' value='submit'>add</a>
               <div class="table-responsive">
                   <table class="table table-hover table-strip" id="dataTables">
                       <thead>
@@ -212,11 +221,11 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
                           @foreach($monthlyPayments as $monthlyPayment)
                          
                           <tr>
-                          <td><a class='btn btn-primary fa fa-eye' href="view\{{$monthlyPayment->id}}" type='submit' value='submit' > </a>
-                          <a class='btn btn-success fa fa-pencil' href="edit\{{$monthlyPayment->id}}" type='submit' value='submit'> </a>
+                          <td><a class='btn btn-primary icons' href="view\{{$monthlyPayment->id}}" type='submit' value='submit' >visibility</a>
+                          <a class='btn btn-success icons' href="edit\{{$monthlyPayment->id}}" type='submit' value='submit'>edit</a>
                           @csrf
                           @method('DELETE')
-                          <a class='btn btn-danger fa fa-trash' onclick="return confirm('Are you sure to delete the item?')" href="delete\{{$monthlyPayment->id}}" type='submit' value='submit'> </a>
+                          <a class='btn btn-danger icons' onclick="return confirm('Are you sure to delete the item?')" href="delete\{{$monthlyPayment->id}}" type='submit' value='submit'>delete</a>
                           </td>
                            <td>{{$monthlyPayment->newID}}</td>
                            <td>{{$monthlyPayment->oldID}}</td>
@@ -266,7 +275,7 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
 <!-- <script src="{{asset('assets/dataTables/datatables.min.js')}}"></script>
 <script src="{{asset('assets/js/datatable.js')}}"></script> -->
 </div>
-  
+
 
 
 </html>
