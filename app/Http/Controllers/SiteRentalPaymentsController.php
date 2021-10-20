@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use App\Http\Resources\SiteResource;
+use App\Http\Resources\SiteRentalPaymentResource;
+use App\Exports\MonthlyExport;
+use App\Exports\SitesExport;
 use App\Models\Site;
 use DB;
+use Excel;
 use Illuminate\Support\Facades\Auth;
 class SiteRentalPaymentsController extends Controller
 {
@@ -12,68 +17,125 @@ class SiteRentalPaymentsController extends Controller
     {
         $this->middleware('auth');
     }
-    public function detail(Request $request)
+    //Api
+    public function export($sites)
     {
-        $search = $request->input('search');
-        $filter = $request->input('filter');
-        $startDateFrom = $request->input('startDateFrom');
-        $endDateFrom = $request->input('endDateFrom');
-        $startDateTo = $request->input('startDateTo');
-        $endDateTo = $request->input('endDateTo');
-        $status = $request->input('status');
-            if($startDateFrom!=null && $startDateTo!=null)
-            {
-                $sites=Site::whereBetween('startDate',[$startDateFrom,$startDateTo])->where('isDeleted','=',0)->orderByDesc('created_at');
-                
-            }
-            else
-            {
-                $sites=Site::where('isDeleted','=',0)->orderByDesc('created_at');
-            }
-       
-            if($endDateFrom!=null && $endDateTo!=null)
-            {
-                $sites=$sites->whereBetween('endDate',[$endDateFrom,$endDateTo])->where('isDeleted','=',0)->orderByDesc('created_at');
-            }
-            else
-                $sites=$sites->where('isDeleted','=',0)->orderByDesc('created_at');
-           
-        if($status!=null)
-            $sites = $sites->where('status',"=",$status)->orderByDesc('created_at');
-        switch($filter)
+        $sitesArray = explode(',',$sites);
+        //dd($sitesArray);
+        return (new SitesExport($sitesArray))->download('sites.xlsx');
+        //return Excel::download(new SitesExport,'MonthlyPayment.xlsx');
+    }
+    public function allSites()
+    {
+        return Site::pluck('id');
+    }
+
+    public function site()
+    {
+        $newID= request('SNewID','');
+        $oldID= request('SOldID','');
+        $startDate= request('SStartDate','');
+        $endDate= request('SEndDate','');
+        $pmtMethod =request('SPaymentTerm','');
+        $constructionDate = request('SConstructionDate','');
+        $netFee = request('SNetFee','');
+        $RFAIDate = request('SRFAIDate','');
+        $status = request('SStatus');
+        $paginate = request('paginate');
+
+            
+        if($paginate!="")
         {
-            case "NewID": 
-                 $sites = $sites->where('newID','LIKE','%'.$search.'%')->orderByDesc('created_at') ->paginate(5);
-                //$sites = Site::where('newID','LIKE','%'.$search.'%');
-                //$sites=Site::whereBetween('startDate',[$startDate,$endDate])->where('newID','LIKE','%'.$search.'%')->paginate(5);
-             
-                return view('site-rental/list',compact('sites'));
+            $paginate = (int)$paginate;
+            $sites = Site::search(trim($newID),trim($oldID),trim($startDate),trim($endDate),trim($pmtMethod),trim($constructionDate),trim($netFee),trim($RFAIDate),trim($status))->paginate($paginate);
+         }
+        else
+            $sites = Site::search(trim($newID),trim($oldID),trim($startDate),trim($endDate),trim($pmtMethod),trim($constructionDate),trim($netFee),trim($RFAIDate),trim($status))->get();
+          
+   
+        return SiteResource::collection($sites);
+    }
+    
+    public function detail(Request $request)
+    {   
+        // $sites = Site::paginate(5);
+        // //return SiteReource::collection($sites);
+        // return SiteResource::collection($sites);
+        return view('site-rental-payment/detail');
+        // $search = $request->input('search');
+        // $filter = $request->input('filter');
+        // $startDateFrom = $request->input('startDateFrom');
+        // $endDateFrom = $request->input('endDateFrom');
+        // $startDateTo = $request->input('startDateTo');
+        // $endDateTo = $request->input('endDateTo'f);
+        // $status = $request->input('status');
+        //     if($startDateFrom!=null && $startDateTo!=null)
+        //     {
+        //         $sites=Site::whereBetween('startDate',[$startDateFrom,$startDateTo])->where('isDeleted','=',0)->orderByDesc('created_at');
                 
-            break;
-            case "OwnerName": 
-                $sites = $sites->where('fullname','LIKE','%'.$search.'%')->orderByDesc('created_at')->paginate(5);
-                return view('site-rental/list',compact('sites'));
-            break;
-            default:
-                $sites = $sites->paginate(5);
-                return view('site-rental-payment/detail',compact('sites'));
+        //     }
+        //     else
+        //     {
+        //         $sites=Site::where('isDeleted','=',0)->orderByDesc('created_at');
+        //     }
+       
+        //     if($endDateFrom!=null && $endDateTo!=null)
+        //     {
+        //         $sites=$sites->whereBetween('endDate',[$endDateFrom,$endDateTo])->where('isDeleted','=',0)->orderByDesc('created_at');
+        //     }
+        //     else
+        //         $sites=$sites->where('isDeleted','=',0)->orderByDesc('created_at');
+           
+        // if($status!=null)
+        //     $sites = $sites->where('status',"=",$status)->orderByDesc('created_at');
+        // switch($filter)
+        // {
+        //     case "NewID": 
+        //          $sites = $sites->where('newID','LIKE','%'.$search.'%')->orderByDesc('created_at') ->paginate(5);
+        //         //$sites = Site::where('newID','LIKE','%'.$search.'%');
+        //         //$sites=Site::whereBetween('startDate',[$startDate,$endDate])->where('newID','LIKE','%'.$search.'%')->paginate(5);
+             
+        //         return view('site-rental/list',compact('sites'));
+                
+        //     break;
+        //     case "OwnerName": 
+        //         $sites = $sites->where('fullname','LIKE','%'.$search.'%')->orderByDesc('created_at')->paginate(5);
+        //         return view('site-rental/list',compact('sites'));
+        //     break;
+        //     default:
+        //         $sites = $sites->paginate(5);
+        //         return view('site-rental-payment/detail',compact('sites'));
           
                   
-        }
+        //}
         
     }
     public function index(Request $request)
     {
         
-        $monthly = Site::getMonthly();
-        $quaterly = Site::getQuaterly();
-        $semesterly = Site::getSemesterly();
-        $yearly = Site::getYearly();
+        $monthly = Site::getPaymentTerm(1);
+        $quaterly = Site::getPaymentTerm(3);
+        $semesterly = Site::getPaymentTerm(6);
+        $yearly = Site::getPaymentTerm(12);
+        $report = [$monthly,$quaterly,$semesterly,$yearly];
        
         // return view('site-rental/list');
         //$sites = Site::paginate(5);
         //dd($monthly);
          return view('site-rental-payment/list',compact('monthly','quaterly','semesterly','yearly'));
+    }
+    public function getMonthlyPayment()
+    {
+        
+        $monthly = Site::getPaymentTerm(1);
+        $quaterly = Site::getPaymentTerm(3);
+        $semesterly = Site::getPaymentTerm(6);
+        $yearly = Site::getPaymentTerm(12);
+        $report = [$monthly,$quaterly,$semesterly,$yearly];       
+        // return view('site-rental/list');
+        //$sites = Site::paginate(5);
+        //dd($monthly);
+        return SiteRentalPaymentResource::collection($report);
     }
     public function create()
     {

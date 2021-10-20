@@ -1,5 +1,9 @@
 @extends('layouts/app')
 @section("content")
+<?php
+use App\Models\Helpers;
+
+?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -86,10 +90,13 @@
                                     name="status"
                                     value="{{$site->status}}"
                                     disabled="true" >
-                                    <option value="On Air" {{ $site->status=="On Air"? "selected" :""  }} >On Air</option>
-                                    <option value="shut down" {{ $site->status=="shut down"? "selected" :""  }}>shut down</option>
-                                    <option value="Status" {{ $site->status=="Status"? "selected" :""  }}>Status</option>
-                                    <option value="Under Installation" {{ $site->status=="Under Installation"? "selected" :""  }}>Under Installation</option>    
+                                    <?php
+                                        for ($i=0;$i<count(Helpers::getSiteStatus());$i++){
+                                        ?>
+                                        <option {{ $site->status==Helpers::getSiteStatus()[$i] ? "selected" :""  }} value="<?=Helpers::getSiteStatus()[$i];?>"><?=Helpers::getSiteStatus()[$i];?></option>
+                                        <?php
+                                        }
+                                        ?>      
                                 </select>
                                 <span style="color:red">@error('status'){{$message}}@enderror</span>
                             </div>
@@ -98,8 +105,13 @@
                                 <select disabled id="inputSiteOwner" class="form-control input-style"
                                     name="siteOwner"
                                     value="{{$site->siteOwner}}">
-                                    <option  {{ $site->siteOwner=="SmartAxiata"? "selected" :""  }} value="SmartAxiata">Smart Axiata</option>
-                                    <option value="e.co" {{ $site->siteOwner=="e.co"? "selected" :""  }}>e.co</option> 
+                                    <?php
+                                        for ($i=0;$i<count(Helpers::getSiteOwner());$i++){
+                                        ?>
+                                        <option {{ $site->siteOwner==Helpers::getSiteOwner()[$i] ? "selected" :""  }} value="<?=Helpers::getSiteOwner()[$i];?>"><?=Helpers::getSiteOwner()[$i];?></option>
+                                        <?php
+                                        }
+                                        ?>    
                                 </select>
                                 <span style="color:red">@error('status'){{$message}}@enderror</span>
                             </div>
@@ -345,10 +357,13 @@
                                 <select id="inputPmtMethod" disabled="true" class="form-control input-style"
                                     name="pmtMethod"
                                     value="{{old('pmtMethod')}}">
-                                    <option {{ $site->pmtMethod =="1"? "selected" :""  }} value="1">Monthly</option>
-                                    <option {{ $site->pmtMethod=="3"? "selected" :""  }} value="3">Quarterly</option>
-                                    <option {{ $site->pmtMethod=="6"? "selected" :""  }} value="6">Semesterly</option>
-                                    <option {{ $site->pmtMethod=="12"? "selected" :""  }} value="12">Yearly</option>   
+                                    <?php
+                                        for ($i=0;$i<count(Helpers::getPaymentTerm());$i++){
+                                        ?>
+                                        <option {{ $site->pmtMethod==Helpers::getPaymentTerm()[$i] ? "selected" :""  }} value="<?=Helpers::getPaymentTerm()[$i];?>"><?=Helpers::getPaymentTerm()[$i];?></option>
+                                        <?php
+                                        }
+                                        ?>      
                                 </select>
                                 <span style="color:red">@error('status'){{$message}}@enderror</span>
                         </div>

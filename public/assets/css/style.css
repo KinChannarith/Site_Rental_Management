@@ -4,6 +4,7 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 --*/
+
 .btn-primary{
     background-color: var(--primary);
 }
@@ -28,7 +29,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     --card-shadow: 0 1px 2px 1px rgba(154, 154, 204, .22); }
 body{
 	margin:0;
-	font-family: 'OpenSans-Regular';
+	/* font-family: 'OpenSans-Regular'; */
 	background: #fff;
 }
 @font-face {
@@ -51,14 +52,14 @@ th{
     border-color: var(--primary) !important;
 }
 body a{
-    font-family: 'OpenSans-Regular';
-	transition: 0.5s all ease;
+    /* font-family: 'OpenSans-Regular'; */
+	/* transition: 0.5s all ease;
 	-webkit-transition: 0.5s all ease;
 	-moz-transition: 0.5s all ease;
 	-o-transition: 0.5s all ease;
-	-ms-transition: 0.5s all ease;
+	-ms-transition: 0.5s all ease; */
 	text-decoration:none;
-    color:blue;
+    
 }
 .user-panel-top {
     display: grid;
@@ -69,8 +70,8 @@ body a{
 
 h1,h2,h3,h4,h5,h6{
 	margin:0;	
-	font-family: 'OpenSans-Regular';
-    padding-bottom: 12px;
+	/* font-family: 'OpenSans-Regular'; */
+    padding-bottom: 8px !important;
 }
 p{
 	margin:0;
@@ -104,17 +105,15 @@ body a:hover{
 .logo h1 {
     font-size: 3.5em;
     display: inline-block;
-    font-family: 'OpenSans-Regular';
+    /* font-family: 'OpenSans-Regular'; */
     line-height: 1em;
 }
 .logo h1 a {
-    color: #fff;
-	font-family: 'OpenSans-Regular';
+    
+	/* font-family: 'OpenSans-Regular'; */
 	text-decoration:none;
 }
-.logo h1 a:hover{
-    color: #fff;
-}
+
 /*--top-nav--*/
 .top-nav {
 	z-index: 999;
@@ -127,33 +126,28 @@ nav.navbar.navbar-default {
 .top-nav ul li {
     margin: 0 0.5em;
     display: inline-block;
+    color: white;
 }
-.top-nav {
-    background-color: #03861e !important;
-}
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus, .top-nav ul li  a.active:before {
-    color: #5BD982;
-}
-/* Effect 11: text fill based on Lea Verou's animation http://dabblet.com/gist/6046779 */
+
 .top-nav ul li a {
     text-decoration: none;
     letter-spacing: 0.2px;
-    /* font-size: 1.2em; */
+    
     font-size: 0.9em;
-	color:#fff;
-	font-family: 'OpenSans-Regular';
+	
 	position:relative;
     padding-left: 2em;
     padding-right: 2em;
+    color: white;
 }
 .top-nav ul li a.link-kumya.active {
-    /* background: #745EC5; */
+   
     background: #ffd300;
     color:rgb(44, 42, 42);
    
 }
 .top-nav ul li a.link-kumyaLogout.active {
-    /* background: #745EC5; */
+   
     background: #ffd300;
     color:rgb(44, 42, 42);
    
@@ -193,6 +187,10 @@ ul.nav.navbar-right {
 /*--Kumya--*/
 .link-kumya {
 	overflow: hidden;
+    background-color: var(--primary);
+}
+#navbar{
+    background-color: var(--primary);
 }
 .link-kumya:hover {
 	color: #000;
@@ -247,32 +245,10 @@ ul.nav.navbar-right {
     width:200px;
     white-space: nowrap;
 }
-.link-kumyaLogout:hover {
-	color: rgba(0, 0, 0, 0);
-    
-}
-.link-kumyaLogout::after {
-	content: '';
-	position: absolute;
-	height: 100%;
-	width: 100%;
-	top: 0;
-	right: -2px;
-	z-index: 1;
-	/* background: #745EC5; */
-    background: #ffd300;
-	-webkit-transform: translate3d(101%,0,0);
-	transform: translate3d(101%,0,0);
-	-webkit-transition: -webkit-transform 0.5s;
-	transition: transform 0.5s;
-	-webkit-transition-timing-function: cubic-bezier(0.7,0,0.3,1);
-	transition-timing-function: cubic-bezier(0.7,0,0.3,1);
-}
 
-.link-kumyaLogout:hover::after {
-	-webkit-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
-}
+
+
+
 .link-kumyaLogout span {
 	position: relative;
 	z-index: 9999;
@@ -280,8 +256,8 @@ ul.nav.navbar-right {
 .link-kumyaLogout span::before {
     
 	content: attr(data-letters);
-	/* position: absolute; */
-	color: #03861e;
+	position: absolute;
+	color: #fff;
 	left: 0;
 	overflow: hidden;
 	white-space: nowrap;
@@ -311,7 +287,7 @@ ul.nav.navbar-right {
     color: #fff;
     font-size: 3em;
     line-height: 1.2em;
-    font-family: 'OpenSans-Regular';
+    /* font-family: 'OpenSans-Regular'; */
 }
 .banner-text h3 {
     font-size: 1.5em;
@@ -332,7 +308,7 @@ ul.nav.navbar-right {
     z-index: 1;
     -webkit-backface-visibility: hidden;
     -moz-osx-font-smoothing: grayscale;
-    font-family: 'OpenSans-Regular';
+    /* font-family: 'OpenSans-Regular'; */
     text-decoration: none;
     display: inline-block;
 }
@@ -453,7 +429,7 @@ ul.nav.navbar-right {
 .callbacks_tabs a:after {
     content: "\f111";
     font-size: 0;
-    font-family: 'OpenSans-Regular';
+    /* font-family: 'OpenSans-Regular'; */
     visibility: visible;
     height: 14px;
     width: 14px;
@@ -689,7 +665,7 @@ p {
     font-size: 2.5em;
     color: #745EC5;
     margin-bottom: 0.5em;
-    font-family: 'OpenSans-Regular';
+    /* font-family: 'OpenSans-Regular'; */
 }
 .footer-grids:nth-child(1) {
     padding: 0 5em 0 0;
@@ -1330,7 +1306,7 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
     font-size: 1em;
     padding: .8em 1em;
     -webkit-appearance: none;
-	font-family: 'OpenSans-Regular';
+	/* font-family: 'OpenSans-Regular'; */
 }
 .coment-form textarea {
 	background: #F7F7F7;
@@ -1345,7 +1321,7 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
 	resize: none;
 	padding: .8em 1em;
 	-webkit-appearance:none;
-	font-family: 'OpenSans-Regular';
+	/* font-family: 'OpenSans-Regular'; */
 }
 .coment-form input[type="submit"] {
     padding: .8em 0;
@@ -1361,7 +1337,7 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
     -o-transition: .5s all;
     -ms-transition: .5s all;
     -webkit-appearance: none;
-	font-family: 'OpenSans-Regular';
+	/* font-family: 'OpenSans-Regular'; */
 }
 .coment-form input[type="submit"]:hover {
     color: #fff;
@@ -1413,7 +1389,7 @@ h3.hdg {
 	color:#000;
 	font-size:1.7em;
 	font-weight:300;
-	margin-bottom: 1em;
+	margin-bottom: 0.7em;
 }
 .grid_3 p{
   color: #555;
@@ -1498,7 +1474,7 @@ section#tables  p {
   background-color: #ffffff;
 }
 .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-  padding: 15px!important;
+  padding: 10px!important;
 }
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
   font-size: 0.9em;
@@ -1532,7 +1508,7 @@ li.list-group-item1 {
   line-height: 2.5em;
 }
 .input-group {
-  margin-bottom: 20px;
+  margin-bottom: 4px;
   }
 .in-gp-tl{
 	padding:0;
@@ -1588,22 +1564,23 @@ h2.typoh2{
 }
 @media (max-width:480px){
 	.table h1 {
-		font-size: 26px;
+		font-size: 24px;
 	}
 	.table h2 {
-		font-size: 23px;
+		font-size: 21px;
 	}
 	.table h3 {
-		font-size: 20px;
+		font-size: 18px;
 	}
 	.label {
 		font-size: 53%;
 	}
 	.alert,p {
-		font-size: 14px;
+		font-size: 12px;
 	}
 	.pagination {
 		margin: 20px 0 0px;
+        color:var(--primary);
 	}
 }
 @media (max-width: 320px){
@@ -1675,7 +1652,7 @@ h2.typoh2{
 	resize:none;
 	min-height:10em;
 	margin: 1em 0;
-	font-family: 'OpenSans-Regular';
+	/* font-family: 'OpenSans-Regular'; */
 }
 .contact-grid input[type="submit"] {
     outline: none;
@@ -1692,7 +1669,7 @@ h2.typoh2{
     -o-transition: .5s all;
     -ms-transition: .5s all;
     -webkit-appearance: none;
-	font-family: 'OpenSans-Regular';
+	/* font-family: 'OpenSans-Regular'; */
 }
 .contact-grid input[type="submit"]:hover{
 	background:#B9B8B8;
@@ -1706,17 +1683,17 @@ h2.typoh2{
 }
 .address ul li {
     list-style-type: none;
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: #999;
     display: inline-block;
     margin-right: 3em;
 }
 .address ul li i.phon {
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: #745EC5;
     font-weight: 900;
     font-style: normal;
-    font-family: 'OpenSans-Regular';
+    /* font-family: 'OpenSans-Regular'; */
 }
 .address ul li i.glyphicon {
     font-size: 1em;
@@ -2132,7 +2109,7 @@ p {
 	margin: 13em auto 0;
 }
 .banner-text h2 {
-    font-size: 2.3em;
+    font-size: 2em;
 }
 .banner-text h3 {
     letter-spacing: 1px;
@@ -2215,7 +2192,7 @@ ul.nav.navbar-right {
 }
 @media(max-width:767px){
 button.navbar-toggle {
-    background: #745EC5;
+    background: var(--primary);
     border-color: #fff;
 }
 .navbar-toggle .icon-bar {

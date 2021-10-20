@@ -4,16 +4,18 @@
 <head>
 
 <!--mobile apps-->
+<meta name="csrf-token" content="{{csrf_token()}}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Rental Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script> -->
 <!--mobile apps-->
 <!--Custom Theme files -->
 <link  href="{{ asset('assets/css/bootstrap.css') }}" type="text/css" rel="stylesheet" media="all">
-<link href="{{ asset('assets/css/style.css') }}" type="text/css" rel="stylesheet" media="all">
-<link rel="stylesheet" href="{{ asset('assets/css/prettySticky.css') }}" type="text/css">
+
+
+
 <!-- //Custom Theme files -->
 <!-- js -->
 
@@ -21,7 +23,7 @@
 <!-- start-smoth-scrolling-->
 
 </head>
-<body >
+<body>
     
         <!--navigation-->
 			<div class="top-nav">
@@ -41,10 +43,8 @@
 						</div>
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <div class="row">
-                            
-                        
-                            <img src="{{ asset('assets/images/smart.jpg')}}" alt="" style="width:7%;heigh:7%;float:left;"/>
+                        <div class="row">	
+                            <a><img src="{{ asset('assets/images/smart.svg')}}"  style="width:7%;heigh:7%;float:left;" alt="" /></a>
 							@guest
                 			@if (Route::has('login'))	
 							<ul class="nav navbar-right">
@@ -63,6 +63,9 @@
 							<section data-navlink="Link2">
 							
 							</section>
+							<!-- <div id="app">
+								<navigations></navigations>
+							</div> -->
                             <ul class="nav navbar-right" id="navbar">
                             	<li><a id="Link1" href="{{route('site-rental.Index')}}" class="link-kumya scroll"><span data-letters="Site Rental List">Site Rental List</span></a></li>
 								<li><a id="Link2" href="{{route('monthly-payment.Index')}}" class="link-kumya scroll"><span data-letters="Monthly Payment List">Monthly Payment List</span></a></li>
@@ -70,9 +73,12 @@
 								<li><a id="Link4" href="{{route('vendor-list.Index')}}" class="link-kumya scroll"><span data-letters="Vendor List">Vendor List</span></a></li>
 								<li><a id="Link5" href="{{route('site-rental-payment-report.Index')}}" class="link-kumya"><span data-letters="SRPR">SRPR</span></a></li>	
 								<li><a id="Link6" href="{{route('site-rental-payment.Index')}}" class="link-kumya"><span data-letters="SRP">SRP</span></a></li>
-								
-								<li><a href="{{ route('logout') }}" class="link-kumyaLogout">
-										 <span data-letters="Logout">{{ Auth::user()->name }}</span>
+								<li><a  class="link-kumyaLogout">
+										 <span data-letters={{ Auth::user()->name }}>{{ Auth::user()->name }}</span>
+									</a>
+								</li>
+								<li><a href="{{ route('logout') }}" class="link-kumya">
+										 <span data-letters="Logout">Logout</span>
 									</a>
 								</li>
 							
@@ -85,17 +91,24 @@
 							
 						</div>
 					</div>
-				</nav>
+				</navs>
 			</div>	
 		<!--//navigation-->
+       
+		<br/>
         <br/>
         <br/>
-        <br/>
-        <br/>
-        <br/>
-            @yield('content')
+    @yield('content')
 </body>
+<!-- <link href="{{ asset('assets/css/style.css') }}" type="text/css" rel="stylesheet" media="all"> -->
+<!-- <link rel="stylesheet" href="{{ asset('assets/css/prettySticky.css') }}" type="text/css"> -->
+<script src="{{ asset('assets/js/jquery-1.10.2.min.js')}}"></script> 
+<link  href="{{ asset('assets/css/bootstrap4.min.css') }}" type="text/css" rel="stylesheet" media="all">
+
+
+
+
 <script  src="{{ asset('assets/js/prettySticky.js') }}"></script>
 <script  src="{{ asset('assets/js/bootstrap.js') }}" ></script>
-
+<script src="{{asset('js/app.js')}}"></script>
 </html>

@@ -24,6 +24,7 @@ $toYear = (isset($_GET['toYear'])) ? htmlentities($_GET['toYear']) : Helpers::da
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
@@ -32,11 +33,46 @@ $toYear = (isset($_GET['toYear'])) ? htmlentities($_GET['toYear']) : Helpers::da
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> -->
   <!-- <link rel="stylesheet" href="{{asset('assets/DataTables/datatables.css') }}"> -->
-  <link rel="stylesheet" href="assets/dataTables/datatables.min.css">
+  <!-- <link rel="stylesheet" href="assets/dataTables/datatables.min.css"> -->
   
   <title>report-site-rental-payment</title>
 
   <!-- Template CSS -->
+
+  
+</head>
+<div class="container-fluid content-top-gap">
+<body class="sidebar-menu-collapsed">
+<div class="se-pre-con"></div>
+<section data-navlink="Link2">
+<section class="forms">
+<!-- main content start -->
+  <div class="main-content">
+      <!-- content -->
+      <div class="py-2 mb-4">
+            <div class="cards__heading">
+              <h3><b>Site Rental Payment Report</b></h3>
+            </div>  
+              <br/>
+              @if ($message = Session::get('success'))
+                            <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                            </div>
+              @endif
+              <div id="app">
+              <srprs> </srprs>
+              </div>
+               
+                <!-- <form action="{{route('monthly-payment.Index')}}" method="GET"> -->
+                 
+                  
+              
+        
+      </div>
+  </div>
+</section>
+<!-- main content end-->
+</section>
   <script src="{{ asset('assets/js/jquery-1.10.2.min.js')}}"></script> 
 <script type="text/javascript">
 			$(function(){
@@ -49,48 +85,10 @@ $toYear = (isset($_GET['toYear'])) ? htmlentities($_GET['toYear']) : Helpers::da
 	</script> 
 
   <!-- google fonts -->
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
  <script>
-  //  $(document).ready(function(){
-  //       $("#datetimepicker3").change(function(){
-  //           // $year= $("#datetimepicker").Year();
-  //           // $month=$("#datetimepicker").Month();
-  //           // $("#datetimepicker").val($year+"-"+$month+"+"-01");
-  //           var dt = new Date($("#datetimepicker").val());
-  //           var year= dt.getFullYear();
-  //           var month = (dt.getMonth() < 10 ? '0' : '') + (dt.getMonth()+1);
-
-  //           alert(year+"-"+month+"-01");
-  //           //$("#datetimepicker3").val(year+"-"+month+"-01");
-  //       });
-        
-  //       //alert('Kok');
-  //   });
+  
   $(document).ready(function(){
-        // $("#btnSearch").click(function(){
-        //   var StartDateFrom = new Date( $("#datetimepicker").val());
-        //    var StartDateTo = new Date($("#datetimepicker2").val());
-        //    var EndDateTo = new Date($("#datetimepicker3").val());
-
-        //    StartDateFrom =
-
-        //    var Status = $("#inputStatus").val()
-        //    var Filter = $("#inputFilter").val()
-        //    var Search = $("#inputSearch").val()
-        //    var datas = {startDateFrom:StartDateFrom,
-        //                 startDateTo:StartDateTo,
-        //                 status:Status,
-        //                 filter:Filter,
-        //                 search:Search,
-        //                 payMonth: EndDateTo };
-          
-        //   var datatype = 'jsonp';
-        //   // $.get("{{ URL::to('monthly-payment/index')}}",datas,function(data){
-          
-        //   // });
-         
-          
-        // });
         $("#datetimepicker3").change(function(){
             var payMonth = new Date($("#datetimepicker3").val());
             var year= payMonth.getFullYear();
@@ -101,155 +99,6 @@ $toYear = (isset($_GET['toYear'])) ? htmlentities($_GET['toYear']) : Helpers::da
         });
 });
 </script>
-  
-</head>
-<div class="container-fluid content-top-gap">
-<body class="sidebar-menu-collapsed">
-<div class="se-pre-con"></div>
-<section data-navlink="Link2">
-<section class="forms">
-<!-- main content start -->
-  <div class="main-content">
-      <!-- content -->
-      <div class="card card_border py-2 mb-4">
-          <div class="cards__heading">
-              <h3>Site Rental Payment Report<span></span></h3>
-            </div>  
-              <br/>
-              @if ($message = Session::get('success'))
-                            <div class="alert alert-success">
-                            <p>{{ $message }}</p>
-                            </div>
-              @endif
-              <div>
-                
-                <!-- <form action="{{route('monthly-payment.Index')}}" method="GET"> -->
-                  <form action="#"></form>
-                <div class="row">
-                     <div class="form-group col-md-2">
-                        <label for="inputSearch" class="input__label">New ID</label> 
-                            <input type="text" class="form-control input-style" id="inputSearch"
-                                name="search"
-                                value="<?= $search ?>"
-                                placeholder="search">                              
-                        </div>
-                        
-                        <section class="col-md-2">
-                            <div class="form-group >
-                                    <label for="inputYear" class="input__label"><br/></label>
-                                    <select id="inputYear" class="form-control input-style"
-                                        name="fromYear" >
-                                        <option value="1" {{ $fromYear-1 ==$fromYear? "selected" :""  }} ><?php echo $fromYear-1 ?></option>
-                                        <option value="2" {{ $fromYear==$fromYear? "selected" :""  }}><?php echo $fromYear ?></option>
-                                        <option value="3" {{ $fromYear+1==$fromYear? "selected" :""  }}><?php echo $fromYear+1 ?></option>
-                                      </select>
-                                    <span style="color:red">@error('status'){{$message}}@enderror</span>
-                            </div>
-                        </section>
-
-                        
-                        
-                        <section class="col-md-2">
-                          <div class="form-group >
-                                  <label for="inputYear" class="input__label"><br/></label>
-                                  <select id="inputYear" class="form-control input-style"
-                                      name="toYear" >
-                                      <option value="1" {{ $toYear-1 ==$toYear? "selected" :""  }} ><?php echo $toYear-1 ?></option>
-                                      <option value="2" {{ $toYear==$toYear? "selected" :""  }}><?php echo $toYear ?></option>
-                                      <option value="3" {{ $toYear+1==$toYear? "selected" :""  }}><?php echo $toYear+1 ?></option>
-                                    </select>
-                                  <span style="color:red">@error('status'){{$message}}@enderror</span>
-                          </div>
-                        </section>
-
-                        
-                        <br/>
-                        
-                          <button type="submit" id="btnSearch" class="btn btn-primary btn-style btn-border" style="width:100px">Search</button>
-                          <button type="submit" id="btnDanger" class="btn btn-danger btn-style btn-border" style="width:100px">Reset</button>
-                      
-                    </div>
-                
-                </div>
-              </form>
-              <a class='btn btn-success icons' href="create" type='submit' value='submit'>add</a>
-              <div class="table-responsive">
-                  <table class="table table-hover table-strip" id="dataTables">
-                      <thead>
-                      </thread>                      
-                      <div class="row">          
-                      <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
-                          <tr>
-                            <th width="17%" rowspan=2 style="vertical-align:middle;">Site ID</th>
-                            <th width="10%" rowspan=2 style="vertical-align:middle;">Year</th>
-                            <th width="10%" colspan=2>Janaury</th>
-                            <th width="10%" colspan=2>February</th>
-                            <th width="10%" colspan=2>March</th>
-                            <th width="10%" colspan=2>April</th>
-                            <th width="10%" colspan=2>May</th>
-                            <th width="10%" colspan=2>June</th>
-                            <th width="10%" colspan=2>July</th>
-                            <th width="10%" colspan=2>August</th>
-                            <th width="10%" colspan=2>September</th>
-                            <th width="10%" colspan=2>October</th>
-                            <th width="10%" colspan=2>November</th>
-                            <th width="10%" colspan=2>December</th>
-                          </tr>
-                          <tr>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                            <th width="10%">Voucher No</th>
-                            <th width="10%">Fee (USD)</th>
-                           
-                          </tr>
-                        </thead>
-                        <tbody>
-                          
-                        </tbody>
-                    </table>
-                    
-              </div>
-              <div class="container">
-                      <div class="row">
-                            <div class="col-10">
-                              <p>Total records: {{ $reports->total()}}</p>
-                            </div>
-                        
-                            <div class="col-2">
-                                {!!$reports->appends(request()->input())->links(('pagination::bootstrap-4'))!!}
-                            </div>
-                      </div>
-                    </div>
-            </div>
-                  
-              
-        </div>
-      </div>
-  </div>
-</section>
-<!-- main content end-->
-</section>
 <!--footer section start-->
 
 <!--footer section end-->
@@ -263,7 +112,24 @@ $toYear = (isset($_GET['toYear'])) ? htmlentities($_GET['toYear']) : Helpers::da
 <!-- <script src="{{asset('assets/dataTables/datatables.min.js')}}"></script>
 <script src="{{asset('assets/js/datatable.js')}}"></script> -->
 </div>
+<script src="{{ asset('assets/js/jquery-1.10.2.min.js')}}"></script> 
 
+
+  <!-- google fonts -->
+ <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+ <script>
+  
+  $(document).ready(function(){
+        $("#datetimepicker3").change(function(){
+            var payMonth = new Date($("#datetimepicker3").val());
+            var year= payMonth.getFullYear();
+            var month = (payMonth.getMonth() < 9 ? '0' : '') + (payMonth.getMonth()+1);
+            
+            $("#datetimepicker3").val(year+"-"+month+"-01");
+
+        });
+});
+</script>
 
 
 </html>

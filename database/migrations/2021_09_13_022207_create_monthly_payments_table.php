@@ -19,12 +19,13 @@ class CreateMonthlyPaymentsTable extends Migration
             $table->string('newID', 10);
             $table->string('oldID', 50)->nullable();
             $table->string('status', 50)->nullable();
-            $table->string('address', 500);
-            $table->string('fullname', 255);
-            $table->string('contact', 255);
+            $table->string('address', 500)->nullable();
+            $table->string('fullname', 255)->nullable();
+            $table->string('contact', 255)->nullable();
             $table->double('netFee',2)->default(0);
             $table->datetime('paymonth');
             $table->datetime('paydate');
+            $table->string('siteOwner', 255)->nullable();     
             $table->string('description', 255);
             $table->string('remark', 500)->nullable();
             $table->string('userCreated', 500)->nullable();

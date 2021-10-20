@@ -32,6 +32,30 @@ class Site extends Model
                     $st = substr($st,0,$legnth).".....";
                 return $st;
     }
+    public static function getPaymentTerm(int $pmtMethod){
+        
+        $tmp ="";
+        switch($pmtMethod){
+            case 1: $tmp="Monthly"; break;
+            case 3: $tmp="Quaterly"; break;
+            case 6: $tmp="Semesterly"; break;
+            case 12: $tmp = "Yearly"; break;
+        }
+      
+        $monthly =DB::select(DB::raw("
+        Select '". $tmp ."' as paymentTerm,
+        (select count(*)  from sites where status='On Air' and pmtMethod='". $tmp ."' ) as allOnAir, 
+        (select count(*)  from sites where status='shut down' and pmtMethod='". $tmp ."' ) as allShutdown, 
+        (select count(*)  from sites where (status='Under Installation'||status='Under Construction') and pmtMethod='". $tmp ."' ) as allUnderInstallation, 
+        (select count(*)  from sites where status='Status' and pmtMethod='". $tmp ."' ) as allStatus, 
+        (select  IFNULL(sum(netFee),0)  from sites where  pmtMethod='". $tmp ."' ) as netFee ,
+        (select  IFNULL(sum(additionalFee),0)  from sites where  pmtMethod='". $tmp ."' ) as additionalFee ,
+        (select count(*)  from sites where pmtMethod='". $tmp ."' ) as allSites, 
+        (select  IFNULL(sum(netFee),0)  from sites where pmtMethod='". $tmp ."' ) as totalAmount
+        "));
+         
+        return $monthly[0];
+    }
     public static function getMonthly(){
         // $search = (isset($_GET['search'])) ? htmlentities($_GET['search']) : '';
         // $filter = (isset($_GET['filter'])) ? htmlentities($_GET['filter']) : '';
@@ -117,6 +141,51 @@ class Site extends Model
         return $semesterly[0];
     }
     
+  
+    public function scopeSearch($query, $term,$oldID,$startDate,$endDate,$pmtMethod,$constructionDate,$netFee,$RFAIDate,$status,$monthlyPayment)
+    {
+       
+        $oldID= "%$oldID%";
+        $startDate="%$startDate%";
+        $endDate="%$endDate%";
+        $pmtMethod = "%$pmtMethod%";
+        $constructionDate="%$constructionDate%";
+        $netFee="%$netFee%";
+        $RFAIDate="%$RFAIDate%";
+        $status="%$status%";
+        if($monthlyPayment=="1")
+        {
+            // echo $term;
+            $query->where(function ($query) use ($term,$oldID,$startDate,$endDate,$pmtMethod,$constructionDate,$netFee,$RFAIDate,$status,$monthlyPayment) {
+                $query->where('newID', $term);
+            }); 
+        }
+        else
+        {
+        $term = "%$term%";
+        $query->where(function ($query) use ($term,$oldID,$startDate,$endDate,$pmtMethod,$constructionDate,$netFee,$RFAIDate,$status) {
+            $query->where('newID', 'like', $term)
+            ->where('oldID','like',$oldID)
+            ->where('startDate','like',$startDate)
+            ->where('endDate','like',$endDate)
+            ->where('pmtMethod','like',$pmtMethod)
+            ->where('netFee','like',$netFee)
+            ->where('status','like',$status);
+            if($constructionDate!="%%")
+                $query->where('constructionDate','like',$constructionDate);
+            if($constructionDate!="%%")
+                $query->where('RFAIDate','like',$RFAIDate);
+            
+        });
+        }   
+            
+            
+            
+               
+              
+        
+    }
+
 
 }
 

@@ -1,0 +1,68 @@
+nav {
+	
+	background-color: #03861e;
+	box-shadow: 0px 2px 5px #B1B1B1;
+}
+
+nav.navScroll {
+	background:rgba(0,0,0,0.7);
+	/* -webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s; */
+	/* color: #745EC5; */
+	color: #fff;
+	background-color: #03861e;
+    
+}
+nav.navScroll ul li a{
+    /* color: #745EC5; */
+	color: #fff;
+}
+nav.navScroll ul.dropdown-menu li a {
+    /* color: #745EC5; */
+	color: #fff;
+}
+nav.navScroll .logo a,nav.navScroll .logo a:hover{
+    /* color: #745EC5; */
+	color: #fff;
+	
+}
+nav.navScroll li a.active {
+    color: #fff;
+}
+nav.navScroll a.buy{
+	color: #fff;
+}
+@media(max-width:767px){
+
+nav.navScroll ul li a {
+    color: #fff;
+}
+}
+@media(max-width:414px){
+nav {
+    padding: 1em;
+}
+}
+@media(max-width:375px){
+nav {
+    padding: 0.8em 1em;
+}
+}
+
+
+.top-nav {
+	z-index: 999;
+}
+/* nav.navbar.navbar-default {
+    background-color: inherit;
+    border: none;
+    margin: 0;
+} */
+.top-nav ul li {
+    
+    display: inline-block;
+}
+.top-nav {
+    background-color: #03861e !important;
+}

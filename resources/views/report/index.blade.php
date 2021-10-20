@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <?php
-
+use App\Models\Helpers;
 // if data 'search' posted in POST method, make it safe in HTML then store it in $search. If 'search' data was not posted, fill it with an empty string ('')
 $search = (isset($_GET['search'])) ? htmlentities($_GET['search']) : '';
 $filter = (isset($_GET['filter'])) ? htmlentities($_GET['filter']) : '';
@@ -23,7 +23,7 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> -->
   <!-- <link rel="stylesheet" href="{{asset('assets/DataTables/datatables.css') }}"> -->
-  <link rel="stylesheet" href="assets/dataTables/datatables.min.css">
+ 
   
   <title>Report-List</title>
 
@@ -31,30 +31,19 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
   
 
   <!-- google fonts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-   $(document).ready(function(){
-
-   
-        
-   
-    
-});
-
-</script>
+ 
   
 </head>
-<div class="container-fluid content-top-gap">
-<body class="sidebar-menu-collapsed">
-<div class="se-pre-con"></div>
-<section>
+<div class="container content-top-gap">
+
+<section data-navlink="Link3">
 <section class="forms">
 <!-- main content start -->
   <div class="main-content">
       <!-- content -->
       <div class="col-md-12">
       
-       <form  action="{{route('monthly-payment.ExportIntoExcel')}}" method="GET">
+            <form  action="{{route('monthly-payment.ExportIntoExcel')}}" method="GET">
       
                 <div class="row">
                     
@@ -77,11 +66,15 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
                                 <select id="inputStatus" class="form-control input-style"
                                     name="status"
                                    >
-                                    <option value="" ></option>
-                                    <option value="On Air" {{ $status =="On Air"? "selected" :""  }} >On Air</option>
-                                    <option value="shut down" {{ $status=="shut down"? "selected" :""  }}>shut down</option>
-                                    <option value="Status" {{ $status=="Status"? "selected" :""  }}>Status</option>
-                                    <option value="Under Installation" {{$status=="Under Installation"? "selected" :""  }}>Under Installation</option> 
+                                   <option selected> </option>
+                                    <?php
+                                        for ($i=0;$i<count(Helpers::getSiteStatus());$i++){
+                                          
+                                        ?>
+                                        <option {{ $status==Helpers::getSiteStatus()[$i] ? "selected" :""  }} value="<?=Helpers::getSiteStatus()[$i];?>"><?=Helpers::getSiteStatus()[$i];?></option>
+                                        <?php
+                                        }
+                                        ?>  
                                 </select>
                                 <span style="color:red">@error('status'){{$message}}@enderror</span>
                         </div>
@@ -126,7 +119,7 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
                                 <button type="submit" id="btnSearch" class="btn btn-primary btn-style btn-border">Export</button>
                             </div>
                 </div>
-                </form>
+            </form>
                 
 
          
@@ -134,7 +127,8 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
        </div>     
         
       </div>
-  </div>
+
+</div>
 
 </section>
 <!-- main content end-->
@@ -146,11 +140,11 @@ $sortBy = (isset($_GET['sortBy'])) ? htmlentities($_GET['sortBy']) : '';
 <!-- <button onclick="topFunction()" id="movetop" class="bg-primary" title="Go to top">
   <span class="fa fa-angle-up"></span>
 </button> -->
-</body>
-<script src="assets/dataTables/datatables.min.js"></script>
 
-<script src="{{asset('assets/dataTables/datatables.min.js')}}"></script>
-<script src="{{asset('assets/js/datatable.js')}}"></script>
+<!-- <script src="assets/dataTables/datatables.min.js"></script> -->
+
+<!-- <script src="{{asset('assets/dataTables/datatables.min.js')}}"></script>
+<script src="{{asset('assets/js/datatable.js')}}"></script> -->
 <script src="{{ asset('assets/js/jquery-1.10.2.min.js')}}"></script> 
 <script type="text/javascript">
 			$(function(){

@@ -6,7 +6,7 @@ navs {
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 	transition: all 0.5s;
-	padding: 0.5em 0;
+	padding: 0em 0;
 	padding-left: 2em;
 	padding-right: 2em;
 	background-color: #03861e;
@@ -44,7 +44,7 @@ navs.navScroll a.buy{
 }
 @media(max-width:767px){
 navs {
-    padding: 1em 2em;
+    padding: 0.8em 1.5em;
 }
 navs.navScroll ul li a {
     color: #fff;
@@ -52,11 +52,11 @@ navs.navScroll ul li a {
 }
 @media(max-width:414px){
 navs {
-    padding: 1em;
+    padding: 0.8em;
 }
 }
 @media(max-width:375px){
 navs {
-    padding: 0.8em 1em;
+    padding: 0.6em 0.6em;
 }
 }

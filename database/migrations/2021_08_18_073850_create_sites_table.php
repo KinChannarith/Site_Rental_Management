@@ -36,7 +36,7 @@ class CreateSitesTable extends Migration
             $table->string('noYear',255);
             $table->double('netFee',2)->default(0);
             $table->double('additionalFee',2)->default(0);
-            $table->integer('pmtMethod');
+            $table->string('pmtMethod', 50)->nullable();
             $table->string('dueDate',500)->nullable();
             $table->string('tenant', 500)->nullable();
             $table->string('remark',500)->nullable();

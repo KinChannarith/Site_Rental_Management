@@ -104,7 +104,7 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
 <!-- main content start -->
   <div class="main-content">
       <!-- content -->
-      <div class="card card_border py-2 mb-4">
+      <div class="py-2 mb-4">
           <div class="cards__heading">
               <h3>Monthly Payment List<span></span></h3>
             </div>  

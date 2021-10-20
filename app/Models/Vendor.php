@@ -14,4 +14,22 @@ class Vendor extends Model
         'vendor_name','vattin','userCreated'
 
     ];
+    public function scopeSearch($query,$vendorName, $vattin)
+    {
+        //dd($vattin);
+        $vendor_name = "%$vendorName%";
+        $vattin= "%$vattin%";
+        
+        
+        $query->where(function ($query) use ($vendor_name,$vattin) {
+            $query->where('vendor_name', 'like', $vendor_name)
+            ->where('vattin','like',$vattin);
+            
+            
+            
+            
+               
+              
+        });
+    }
 }

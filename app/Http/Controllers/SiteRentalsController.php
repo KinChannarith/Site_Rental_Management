@@ -194,6 +194,7 @@ class SiteRentalsController extends Controller
         
         
     }
+   
     public function view($id)
     {
         $site = Site::find($id);

@@ -1,5 +1,9 @@
 @extends('layouts/app')
 @section("content")
+<?php
+use App\Models\Helpers;
+
+?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -84,10 +88,13 @@
                                 <select id="inputStatus" class="form-control input-style"
                                     name="status"
                                     value="{{old('status')}}">
-                                    <option selected value="On Air">On Air</option>
-                                    <option value="shut down">shut down</option>
-                                    <option value="Status">Status</option>
-                                    <option value="Under Installation">Under Installation</option>   
+                                    <?php
+                                        for ($i=0;$i<count(Helpers::getSiteStatus());$i++){
+                                        ?>
+                                        <option value="<?=Helpers::getSiteStatus()[$i];?>"><?=Helpers::getSiteStatus()[$i];?></option>
+                                        <?php
+                                        }
+                                        ?>   
                                 </select>
                                 <span style="color:red">@error('status'){{$message}}@enderror</span>
                             </div>
@@ -96,8 +103,13 @@
                                 <select id="inputSiteOwner" class="form-control input-style"
                                     name="siteOwner"
                                     value="{{old('siteOwner')}}">
-                                    <option selected value="SmartAxiata">Smart Axiata</option>
-                                    <option value="e.co">e.co</option> 
+                                    <?php
+                                        for ($i=0;$i<count(Helpers::getSiteOwner());$i++){
+                                        ?>
+                                        <option value="<?=Helpers::getSiteOwner()[$i];?>"><?=Helpers::getSiteOwner()[$i];?></option>
+                                        <?php
+                                        }
+                                        ?>   
                                 </select>
                                 <span style="color:red">@error('status'){{$message}}@enderror</span>
                             </div>
@@ -311,14 +323,17 @@
                                     
                             </div>
                             <div class="form-group col-md-2">
-                                <label for="inputPmtMethod" class="input__label">Pmt Method</label>
+                                <label for="inputPmtMethod" class="input__label">Payment Term</label>
                                 <select id="inputPmtMethod" class="form-control input-style"
                                     name="pmtMethod"
                                     value="{{old('pmtMethod')}}">
-                                    <option selected value="1">Monthly</option>
-                                    <option value="3">Quarterly</option>
-                                    <option value="6">Semesterly</option>
-                                    <option value="12">Yearly</option>   
+                                    <?php
+                                        for ($i=0;$i<count(Helpers::getPaymentTerm());$i++){
+                                        ?>
+                                        <option value="<?=Helpers::getPaymentTerm()[$i];?>"><?=Helpers::getPaymentTerm()[$i];?></option>
+                                        <?php
+                                        }
+                                        ?>  
                                 </select>
                                 <span style="color:red">@error('status'){{$message}}@enderror</span>
                             </div>

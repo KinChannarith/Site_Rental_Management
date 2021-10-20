@@ -38,14 +38,6 @@ $year = (isset($_GET['year'])) ? htmlentities($_GET['year']) : Helpers::dateForm
   <script src="{{ asset('assets/js/jquery-1.10.2.min.js')}}"></script> 
   <link  href="{{ asset('assets/css/bootstrap4.min.css') }}" type="text/css" rel="stylesheet" media="all">
  
-  <!-- vue -->
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
-    <script type="module">
-        import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.esm.browser.js'
-        </script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <!-- endVue -->
   <!-- <script type="text/javascript">
       $('Link1').click(function(){
         alert("kok");
@@ -62,7 +54,7 @@ $year = (isset($_GET['year'])) ? htmlentities($_GET['year']) : Helpers::dateForm
 
 <div class="container-fluid content-top-gap">
       <!-- <div id="app">
-        <h2>@{{test}}</h2>
+        
         <div class="container">
             <articles></articles>
         </div>
@@ -89,7 +81,9 @@ $year = (isset($_GET['year'])) ? htmlentities($_GET['year']) : Helpers::dateForm
                                               <select id="inputVendorName" class="form-control input-style"
                                                   name="VendorName" >
                                                   <option value="0" >All</option>
-                                                
+                                                  @foreach($vendors as $vendor)
+                                                  <option value="{{$vendor->id}}" >{{$vendor->vendor_name}}</option>
+                                                    @endforeach
                                                 </select>
                                               <span style="color:red">@error('status'){{$message}}@enderror</span>
                                       </div>
@@ -100,7 +94,9 @@ $year = (isset($_GET['year'])) ? htmlentities($_GET['year']) : Helpers::dateForm
                                               <select id="inputVattin" class="form-control input-style"
                                                   name="Vattin" >
                                                   <option value="0" >All</option>
-                                                 
+                                                  @foreach($vendors as $vendor)
+                                                  <option value="{{$vendor->id}}" >{{$vendor->vattin}}</option>
+                                                    @endforeach
                                                 </select>
                                               <span style="color:red">@error('status'){{$message}}@enderror</span>
                                       </div>
@@ -126,7 +122,16 @@ $year = (isset($_GET['year'])) ? htmlentities($_GET['year']) : Helpers::dateForm
                                       </tr>
                                     </thead>
                                     <tbody>
-                                   
+                                      @foreach($vendors as $vendor)              
+                                      <tr>
+                                          <td class="id" hidden>{{$vendor->id}}</td>
+                                        <td class="vendor_name">{{$vendor->vendor_name}}</td>
+                                        <td class="vattin">{{$vendor->vattin}}</td>
+                                        <td><a class="btn btn-danger edit" type="submit" id="edit" data-toggle="modal" data-target="#vendorModalCenter" class="btn btn-danger btn-style btn-border" style="width:120px" data-idUpdate="'$vendor->id'">Edit</a</td>
+                                      </tr>
+                                    
+                                    
+                                      @endforeach
                                     </tbody>
                                 </table>
 
@@ -176,10 +181,11 @@ $year = (isset($_GET['year'])) ? htmlentities($_GET['year']) : Helpers::dateForm
     </form>
 </div>
 
-<script src="{{ asset('assets/js/jquery-1.10.2.min.js')}}"></script> 
+
   <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+<script src="{{ asset('assets/js/jquery-1.10.2.min.js')}}"></script> 
 <script  src="{{ asset('assets/js/bootstrap4.min.js') }}" ></script>
 
 <script type="text/javascript">

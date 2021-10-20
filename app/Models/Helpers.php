@@ -6,12 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Helpers extends Model
 {
+    public static function getSiteStatus(){
+        $result = array("On Air","shut down","Under Installation","status","Under Construction");
+        
+        return $result;
+    }
+    public static function getSiteOwner(){
+        $result = array("Smart Axiata","e.co");
+        return $result;
+    }
+    public static function getPaymentTerm(){
+        $result = array("Monthly","Quaterly","Semesterly","Yearly");
+        return $result;
+    }
     public static function dateFormat($date,$format)
     {
         $date = new \Carbon\Carbon($date);
         // return $date->format('d/m/Y');
         return $date->format($format);
         // Now modify and return the date
+    }
+    public static function stringCut($st,$legnth){
+        // if($st.count()=)
+        if(strlen($st)>$legnth)
+            $st = substr($st,0,$legnth).".....";
+        return $st;
     }
     public static function paymentTerm($st){
         switch($st){

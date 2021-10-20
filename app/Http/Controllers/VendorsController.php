@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Vendor;
 use App\Models\Site;
+use App\Http\Resources\VendorResource;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,22 @@ class VendorsController extends Controller
 
         //return view('vendor-list/testVue');
     }
+    public function vendor(){
+        $vendor_name = request('SVendorName');
+        $vattin = request('SVattin');
+        //dd($vendor_name);
+        $paginate = request('paginate');
+        if($paginate!="")
+        {
+            $paginate = (int)$paginate;
+            $vendors = Vendor::search(trim($vendor_name),trim($vattin))->paginate(5);
+        }
+        else
+        {
+            $vendors = Vendor::search(trim($vendor_name),trim($vattin))->get();
+        }
+        return VendorResource::collection($vendors);
+    }
     public function create()
     {
         //
@@ -45,7 +62,15 @@ class VendorsController extends Controller
      */
     public function store(Request $request)
     {
-       
+         
+        //     $vendor = $request->isMethod('put') ? Vendor::findOrFail($request->vendor_id) : new Vendor;
+        //     $vendor->id = $request->input('vendor_id');
+        //     $vendor->vendor_name = $request->input('vendor_name');
+        //     $vendor->vattin = $request->input('vattin');
+
+        // if($vendor->save()) {
+        //     return new VendorResource($vendor);
+        // }
             $request->userCreated = Auth::id();
             // dd($request->userCreated)
 

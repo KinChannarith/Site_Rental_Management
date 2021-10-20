@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Site;
 use App\Models\MonthlyPayment;
 use App\Exports\MonthlyExport;
+use App\Exports\MonthlyPaymentsExport;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Excel;
@@ -83,15 +84,15 @@ class MonthlyPaymentsController extends Controller
         if($filter=="")
         {
             $monthlyPayments = $monthlyPayments->paginate(5);
-            return view('monthly-payment/list',compact('monthlyPayments'));
+            return view('monthly-payment/index',compact('monthlyPayments'));
         }
         else
         {
             $monthlyPayments = $monthlyPayments->where($filter,'LIKE','%'.$search.'%')->orderByDesc('created_at')->paginate(5);
-            return view('monthly-payment/list',compact('monthlyPayments'));
+            return view('monthly-payment/index',compact('monthlyPayments'));
         }
        $monthlyPayments = MonthlyPayment::paginate(5);
-        return view('monthly-payment/list',['monthlyPayments'=>$monthlyPayments]);
+        return view('monthly-payment/index',['monthlyPayments'=>$monthlyPayments]);
     }
     public function store(Request $request)
     {
@@ -102,7 +103,7 @@ class MonthlyPaymentsController extends Controller
            'description'=>'required',
 
        ]);
-       
+        $request->userCreated = Auth::id();
         MonthlyPayment::create($request->all());
 
          return redirect()->route('monthly-payment.Index')
@@ -176,6 +177,13 @@ class MonthlyPaymentsController extends Controller
     }
     public function exportIntoCSV(){
         return Excel::download(new MonthlyExport,'MonthlyPayment.csv');
+    }
+    public function export($monthlyPayments)
+    {
+        $monthlyPaymentsArray = explode(',',$monthlyPayments);
+        //dd($monthlyPaymentsArray);
+        return (new MonthlyPaymentsExport($monthlyPaymentsArray))->download('monthly-payment.xlsx');
+        //return Excel::download(new SitesExport,'MonthlyPayment.xlsx');
     }
     
 

@@ -5,9 +5,11 @@ use App\Http\Controllers;
 use App\Models\Site;
 //API
 use App\Http\Resources\SiteCollection;
-Route::get('/sites', function () {
-    return new SiteCollection(Site::all());
-});
+// Route::get('/sites', function () {
+//     return new SiteCollection(Site::paginate(3));
+// });
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,6 +69,20 @@ Route::resource('/vendor-list/store', App\Http\Controllers\VendorsController::cl
 Route::post('/vendor-list/update', [App\Http\Controllers\VendorsController::class, 'update'])->name('vendor-list.Update');
 
 Route::get('/site-rental-payment-report/index', [App\Http\Controllers\SiteRentalPaymentReportsController::class, 'index'])->name('site-rental-payment-report.Index');
+Route::get('/site-rental-payment/export/{sites}',[App\Http\Controllers\SiteRentalPaymentsController::class, 'export']);
 
 
+Route::get('/monthly-payment/export/{monthlyPayments}',[App\Http\Controllers\MonthlyPaymentsController::class, 'export']);
 
+Route::post('/vendor-list/vendor', [App\Http\Controllers\VendorsController::class, 'store']);
+
+Route::get('/allSites',[App\Http\Controllers\SiteRentalPaymentsController::class, 'getMonthlyPayment']);
+Route::resource('/monthly-payment/monthlyPayments', 'App\Http\Controllers\MonthlyPaymentsApiController');
+// Update article
+//Route::put('/vendor-list/vendor', [App\Http\Controllers\VendorsController::class, 'store']);
+// Route::resource('/monthly-payment/monthlyPaymentVouchers', 'App\Http\Controllers\MonthlyPaymentVouchersController');
+ Route::resource('/monthly-payment/monthlyPaymentVouchers', 'App\Http\Controllers\MonthlyPaymentVouchersApiController');
+
+
+//  Route::post('login', 'App\Http\Controllers\Auth\AuthController@authenticate')->name('login');
+//Route::get('/monthly-payment/monthlyPaymentVouchers/{id}',[App\Http\Controllers\MonthlyPaymentVouchersApiController::class, 'readData'] );
