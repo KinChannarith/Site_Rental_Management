@@ -52,12 +52,12 @@
 								
                             </ul>	
 							@endif
-							@if (Route::has('register'))
+							<!-- @if (Route::has('register'))
 							<ul class="nav navbar-right">
                             	<li><a href="{{ route('register') }}" class="link-kumya active scroll"><span data-letters="Register">Register</span></a></li>
 								
                             </ul>	
-							@endif
+							@endif -->
                            @else
 
 							<section data-navlink="Link2">

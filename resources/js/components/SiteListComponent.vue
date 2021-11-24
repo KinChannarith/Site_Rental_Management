@@ -7,7 +7,7 @@ use App/Models/Helpers;
 
 <div>
       
-  <div class="table-responsive" style="height:570px;">  
+  <div class="table-responsive" style="height:560px;">  
   
     
                                     <a class='btn btn-primary icons' href="/site-rental/create" type='submit' value='submit'>add</a>

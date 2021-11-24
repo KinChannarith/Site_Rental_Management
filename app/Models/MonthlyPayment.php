@@ -17,7 +17,7 @@ class MonthlyPayment extends Model
     protected $table="monthlypayments";
     protected $fillable=['siteID',
         'newID','oldID','status','address','fullname','netFee','siteOwner',
-        'contact','paymonth','paydate','description','remark','isDeleted','userCreated','lastUserEdited','userDeleted'
+        'contact','paymonth','paydate','remark','isDeleted','userCreated','lastUserEdited','userDeleted'
 
     ];
 

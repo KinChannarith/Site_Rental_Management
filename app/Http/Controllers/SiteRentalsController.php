@@ -84,7 +84,7 @@ class SiteRentalsController extends Controller
             'dueDate'=>'required'
 
        ]);
-            $request->userCreated = Auth::id();
+            $request->userCreated = Auth::user()->name;
             // dd($request->userCreated)
 
            Site::create($request->all());
@@ -121,7 +121,7 @@ class SiteRentalsController extends Controller
     }
     public function delete($id)
     {
-        DB::update('Update sites set isDeleted=1, userDeleted='.Auth::user()->id.' where id = ?',[$id]);
+        DB::update('Update sites set isDeleted=1, userDeleted='.Auth::user()->name.' where id = ?',[$id]);
   
         return redirect()->route('site-rental.Index')
                         ->with('success','Sites deleted successfully');
@@ -178,7 +178,7 @@ class SiteRentalsController extends Controller
             $data->additionalFee = $req->additionalFee;
             $data->tenant = $req->tenant;
             $data->contractNumber = $req->contractNumber;
-            $data->lastUserEdited = Auth::user()->id;
+            $data->lastUserEdited = Auth::user()->name;
            
              $data->save();
              return redirect()->route('site-rental.Index')

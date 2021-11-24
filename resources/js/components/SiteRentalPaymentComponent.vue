@@ -110,7 +110,7 @@
                         </thead>
                         <tbody>                     
                          <tr v-for="srp in siteRentalPayments.data" :key="srp.paymentTerm">
-                            <td>{{srp.paymentTerm}}</td>
+                            <td><strong>{{srp.paymentTerm}}</strong></td>
                             <td>{{srp.allUnderInstallation}}</td>
                             <td>{{srp.allStatus}}</td>
                             <td>{{srp.allOnAir}}</td>

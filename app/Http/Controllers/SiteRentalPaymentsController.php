@@ -16,6 +16,25 @@ class SiteRentalPaymentsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        // session_start();
+        // try
+        // {
+            
+        //     if(empty($_SESSION['user_name']))
+        //     {
+                
+        //         return redirect()->route('login');
+        //     }
+           
+        // }
+        // catch (Throwable $e) {
+        //     report($e);
+    
+        //     return redirect('login');
+        // }
+        
+       
     }
     //Api
     public function export($sites)
@@ -252,8 +271,8 @@ class SiteRentalPaymentsController extends Controller
             $data->additionalFee = $req->additionalFee;
             $data->tenant = $req->tenant;
             $data->contractNumber = $req->contractNumber;
+            //$data->lastUserEdited = Auth::user()->id;
             $data->lastUserEdited = Auth::user()->id;
-           
              $data->save();
              return redirect()->route('site-rental.Index')
              ->with('success','Site updated successfully!');

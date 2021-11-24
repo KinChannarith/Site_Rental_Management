@@ -83,13 +83,13 @@
                            
 
                                          
-              <div class="table-responsive" style="height:320px">
+              <div class="table-responsive" style="height:370px;width:auto;">
                                    
                       <div class="row">          
-                      <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                      <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="80%">
                         <thead>
                           <tr>
-                            <th width="17%">Actions</th>
+                            <th width="10%">Actions</th>
                             <th width="10%">New ID</th>
                             <th width="10%">Status</th>
                             <th width="10%">Pay Month</th>
@@ -406,10 +406,12 @@ export default {
                   console.log(this.sites);
                   if(this.sites.data.length>0)
                   {  this.vendors.data=[];
+                      this.monthlyPayment.newID = this.sites.data[0].newID;
                       this.monthlyPayment.netFee=this.sites.data[0].netFee;
                       this.monthlyPayment.siteOwner=this.sites.data[0].siteOwner;
                       this.monthlyPayment.siteID = this.sites.data[0].id;
                       this.monthlyPayment.status= this.sites.data[0].status;
+                      this.monthlyPayment.payMonth = this.payMonth;
                       console.log(this.monthlyPayment);
                       if(this.monthlyPayment.siteOwner=="Smart Axiata")
                       {
@@ -434,6 +436,7 @@ export default {
                   {
                       alert('Site ID is not existed!');
                       this.monthlyPayment.newID=null;
+                      this.vendors.data={};
                   }
                   });
   
@@ -503,7 +506,7 @@ export default {
                   this.monthlyPayment_id = mp.id,   
                   this.isView =null;
                   this.getVouchersWithoutPaginate ='/api/monthly-payment/monthlyPaymentVouchers?id='+this.monthlyPayment_id;
-                  alert(this.getVouchersWithoutPaginate);
+                  // alert(this.getVouchersWithoutPaginate);
                   axios.get(this.getVouchersWithoutPaginate)
                     .then(res=>{
                       console.log("res ", res.data);
@@ -548,6 +551,7 @@ export default {
               if(this.monthlyPayment_id === null){  
                 if(this.monthlyPayment_duplicate.data.length<=0)
                 {                      
+                          
                           this.monthlyPayment.vendors=this.vendors.data;
                           // console.log(this.monthlyPayment);
                           axios.post('/monthly-payment/monthlyPayments/', this.monthlyPayment).then(res=>{

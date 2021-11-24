@@ -21,13 +21,12 @@ use App/Models/Helpers;
           </div>
           <br/>
       
-  <div class="table-responsive">  
+  <div class="table-responsive" style="height:580px">  
   <table id="tbSites" class="table table-bordered table-striped table-hover" width="100%" style="table-layout:fixed;">
     <thead>
        <tr>
                             <th width="200" colspan=2>
-                              Site ID 
-                             
+                              Site ID                              
                             </th>
                             <th  width="360" colspan=2>Contract period</th>
                             <th  width="130" rowspan=2>Contract No.</th>

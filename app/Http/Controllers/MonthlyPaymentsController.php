@@ -103,7 +103,7 @@ class MonthlyPaymentsController extends Controller
            'description'=>'required',
 
        ]);
-        $request->userCreated = Auth::id();
+        $request->userCreated = Auth::user()->name;
         MonthlyPayment::create($request->all());
 
          return redirect()->route('monthly-payment.Index')

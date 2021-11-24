@@ -64,12 +64,12 @@ class MonthlyPaymentsApiController extends Controller
         $post->payDate = $request->payDate;
         $post->netFee = $request->netFee;
         $post->siteOwner = $request->siteOwner;
-        $post->lastUserEdited = Auth::id();
+        $post->lastUserEdited = Auth::user()->name;
        if($request->isDeleted=="delete")
        {
            
         $post->isDeleted=1;
-        $post->userDeleted=Auth::id();
+        $post->userDeleted=Auth::user()->name;
         $post->update();
         return response()->json(['message'=>'Delete successfully!'], 200);
        }
@@ -96,7 +96,7 @@ class MonthlyPaymentsApiController extends Controller
         $post->siteOwner = $request->siteOwner;
         $post->status = $request->status;
         $post->isDeleted=0;
-        $post->userCreated = Auth::id();
+        $post->userCreated = Auth::user()->name;
         // $arr= $request->vendors;
         //$array = json_decode($request->vendors(0)->content());
         // // $p[] = $request->vendors;

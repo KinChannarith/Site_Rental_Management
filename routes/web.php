@@ -84,5 +84,5 @@ Route::resource('/monthly-payment/monthlyPayments', 'App\Http\Controllers\Monthl
  Route::resource('/monthly-payment/monthlyPaymentVouchers', 'App\Http\Controllers\MonthlyPaymentVouchersApiController');
 
 
-//  Route::post('login', 'App\Http\Controllers\Auth\AuthController@authenticate')->name('login');
+ Route::post('login', 'App\Http\Controllers\Auth\AuthController@authenticate')->name('login');
 //Route::get('/monthly-payment/monthlyPaymentVouchers/{id}',[App\Http\Controllers\MonthlyPaymentVouchersApiController::class, 'readData'] );

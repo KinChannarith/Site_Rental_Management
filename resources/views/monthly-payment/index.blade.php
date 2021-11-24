@@ -106,7 +106,7 @@ $status = (isset($_GET['status'])) ? htmlentities($_GET['status']) : '';
   
 </head>
 <div class="container-fluid content-top-gap">
-<body class="sidebar-menu-collapsed">
+<body >
   <div id="app">
   <monthlypayments></monthlypayments>
   </div>

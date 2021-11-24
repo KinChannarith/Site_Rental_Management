@@ -2562,10 +2562,12 @@ __webpack_require__.r(__webpack_exports__);
 
         if (_this2.sites.data.length > 0) {
           _this2.vendors.data = [];
+          _this2.monthlyPayment.newID = _this2.sites.data[0].newID;
           _this2.monthlyPayment.netFee = _this2.sites.data[0].netFee;
           _this2.monthlyPayment.siteOwner = _this2.sites.data[0].siteOwner;
           _this2.monthlyPayment.siteID = _this2.sites.data[0].id;
           _this2.monthlyPayment.status = _this2.sites.data[0].status;
+          _this2.monthlyPayment.payMonth = _this2.payMonth;
           console.log(_this2.monthlyPayment);
 
           if (_this2.monthlyPayment.siteOwner == "Smart Axiata") {
@@ -2589,6 +2591,7 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           alert('Site ID is not existed!');
           _this2.monthlyPayment.newID = null;
+          _this2.vendors.data = {};
         }
       });
     },
@@ -2619,8 +2622,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       this.monthlyPayment.status = mp.status, this.monthlyPayment.newID = mp.newID, this.monthlyPayment.netFee = mp.netFee, this.monthlyPayment.payMonth = mp.payMonth, this.monthlyPayment.payDate = mp.payDate, this.monthlyPayment.description = mp.description, this.monthlyPayment.siteID = mp.siteID, this.monthlyPayment.siteOwner = mp.siteOwner, this.monthlyPayment_id = mp.id, this.isView = null;
-      this.getVouchersWithoutPaginate = '/api/monthly-payment/monthlyPaymentVouchers?id=' + this.monthlyPayment_id;
-      alert(this.getVouchersWithoutPaginate);
+      this.getVouchersWithoutPaginate = '/api/monthly-payment/monthlyPaymentVouchers?id=' + this.monthlyPayment_id; // alert(this.getVouchersWithoutPaginate);
+
       axios.get(this.getVouchersWithoutPaginate).then(function (res) {
         console.log("res ", res.data);
         _this4.vendors = res.data;
@@ -3612,7 +3615,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -41279,14 +41281,17 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "table-responsive", staticStyle: { height: "320px" } },
+          {
+            staticClass: "table-responsive",
+            staticStyle: { height: "370px", width: "auto" }
+          },
           [
             _c("div", { staticClass: "row" }, [
               _c(
                 "table",
                 {
                   staticClass: "table table-striped table-bordered table-hover",
-                  attrs: { id: "example", cellspacing: "0", width: "100%" }
+                  attrs: { id: "example", cellspacing: "0", width: "80%" }
                 },
                 [
                   _vm._m(1),
@@ -41990,7 +41995,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { attrs: { width: "17%" } }, [_vm._v("Actions")]),
+        _c("th", { attrs: { width: "10%" } }, [_vm._v("Actions")]),
         _vm._v(" "),
         _c("th", { attrs: { width: "10%" } }, [_vm._v("New ID")]),
         _vm._v(" "),
@@ -42731,7 +42736,7 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      { staticClass: "table-responsive", staticStyle: { height: "570px" } },
+      { staticClass: "table-responsive", staticStyle: { height: "560px" } },
       [
         _c(
           "a",
@@ -43417,7 +43422,7 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.siteRentalPayments.data, function(srp) {
                   return _c("tr", { key: srp.paymentTerm }, [
-                    _c("td", [_vm._v(_vm._s(srp.paymentTerm))]),
+                    _c("td", [_c("strong", [_vm._v(_vm._s(srp.paymentTerm))])]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(srp.allUnderInstallation))]),
                     _vm._v(" "),
@@ -43656,338 +43661,344 @@ var render = function() {
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
-    _c("div", { staticClass: "table-responsive" }, [
-      _c(
-        "table",
-        {
-          staticClass: "table table-bordered table-striped table-hover",
-          staticStyle: { "table-layout": "fixed" },
-          attrs: { id: "tbSites", width: "100%" }
-        },
-        [
-          _c("thead", [
-            _vm._m(0),
-            _vm._v(" "),
-            _vm._m(1),
+    _c(
+      "div",
+      { staticClass: "table-responsive", staticStyle: { height: "580px" } },
+      [
+        _c(
+          "table",
+          {
+            staticClass: "table table-bordered table-striped table-hover",
+            staticStyle: { "table-layout": "fixed" },
+            attrs: { id: "tbSites", width: "100%" }
+          },
+          [
+            _c("thead", [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tr",
+                { staticStyle: { "background-color": "green !important" } },
+                [
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.SNewID,
+                          expression: "SNewID"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "search", placeholder: "" },
+                      domProps: { value: _vm.SNewID },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.SNewID = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.SOldID,
+                          expression: "SOldID"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "search", placeholder: "" },
+                      domProps: { value: _vm.SOldID },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.SOldID = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.SStartDate,
+                          expression: "SStartDate"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "date", placeholder: "" },
+                      domProps: { value: _vm.SStartDate },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.SStartDate = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.SEndDate,
+                          expression: "SEndDate"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "date", placeholder: "" },
+                      domProps: { value: _vm.SEndDate },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.SEndDate = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.SPaymentTerm,
+                              expression: "SPaymentTerm"
+                            }
+                          ],
+                          staticClass: "form-control input-style",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.SPaymentTerm = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("All")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Monthly" } }, [
+                            _vm._v("Monthly")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Quaterly" } }, [
+                            _vm._v("Quaterly")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Semesterly" } }, [
+                            _vm._v("Semesterly")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Yearly" } }, [
+                            _vm._v("Yearly")
+                          ])
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.SConstructionDate,
+                          expression: "SConstructionDate"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "date", placeholder: "" },
+                      domProps: { value: _vm.SConstructionDate },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.SConstructionDate = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.SStatus,
+                              expression: "SStatus"
+                            }
+                          ],
+                          staticClass: "form-control input-style",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.SStatus = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }),
+                          _vm._v(" "),
+                          _vm._l(_vm.statuses, function(item, key) {
+                            return _c("option", { domProps: { value: key } }, [
+                              _vm._v(
+                                "\r\n                                        " +
+                                  _vm._s(item) +
+                                  "\r\n                                    "
+                              )
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.SNetFee,
+                          expression: "SNetFee"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "search", placeholder: "" },
+                      domProps: { value: _vm.SNetFee },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.SNetFee = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td")
+                ]
+              )
+            ]),
             _vm._v(" "),
             _c(
-              "tr",
-              { staticStyle: { "background-color": "green !important" } },
-              [
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.SNewID,
-                        expression: "SNewID"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "search", placeholder: "" },
-                    domProps: { value: _vm.SNewID },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.SNewID = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.SOldID,
-                        expression: "SOldID"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "search", placeholder: "" },
-                    domProps: { value: _vm.SOldID },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.SOldID = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.SStartDate,
-                        expression: "SStartDate"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "date", placeholder: "" },
-                    domProps: { value: _vm.SStartDate },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.SStartDate = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.SEndDate,
-                        expression: "SEndDate"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "date", placeholder: "" },
-                    domProps: { value: _vm.SEndDate },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.SEndDate = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.SPaymentTerm,
-                            expression: "SPaymentTerm"
-                          }
-                        ],
-                        staticClass: "form-control input-style",
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.SPaymentTerm = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      [
-                        _c("option", { attrs: { value: "" } }, [_vm._v("All")]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Monthly" } }, [
-                          _vm._v("Monthly")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Quaterly" } }, [
-                          _vm._v("Quaterly")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Semesterly" } }, [
-                          _vm._v("Semesterly")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Yearly" } }, [
-                          _vm._v("Yearly")
-                        ])
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.SConstructionDate,
-                        expression: "SConstructionDate"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "date", placeholder: "" },
-                    domProps: { value: _vm.SConstructionDate },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.SConstructionDate = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.SStatus,
-                            expression: "SStatus"
-                          }
-                        ],
-                        staticClass: "form-control input-style",
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.SStatus = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      [
-                        _c("option", { attrs: { value: "" } }),
-                        _vm._v(" "),
-                        _vm._l(_vm.statuses, function(item, key) {
-                          return _c("option", { domProps: { value: key } }, [
-                            _vm._v(
-                              "\r\n                                        " +
-                                _vm._s(item) +
-                                "\r\n                                    "
-                            )
-                          ])
-                        })
-                      ],
-                      2
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.SNetFee,
-                        expression: "SNetFee"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "search", placeholder: "" },
-                    domProps: { value: _vm.SNetFee },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.SNetFee = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("td")
-              ]
+              "tbody",
+              _vm._l(_vm.sites.data, function(site) {
+                return _c("tr", { key: site.ID }, [
+                  _c("td", [_vm._v(_vm._s(site.newID))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.oldID))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.startDate))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.endDate))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.contractNumber))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.pmtMethod))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.siteOwner))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.fullname))]),
+                  _vm._v(" "),
+                  _c("td"),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.address))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.constructionDate))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.status))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.updated_at))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.netFee))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.RFAIDate))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.tenant))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.additionalFee))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(site.additionalService))])
+                ])
+              }),
+              0
             )
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.sites.data, function(site) {
-              return _c("tr", { key: site.ID }, [
-                _c("td", [_vm._v(_vm._s(site.newID))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.oldID))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.startDate))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.endDate))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.contractNumber))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.pmtMethod))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.siteOwner))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.fullname))]),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.address))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.constructionDate))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.status))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.updated_at))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.netFee))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.RFAIDate))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.tenant))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.additionalFee))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(site.additionalService))])
-              ])
-            }),
-            0
-          )
-        ]
-      )
-    ]),
+          ]
+        )
+      ]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-4" }, [
       _c(
@@ -44029,7 +44040,7 @@ var staticRenderFns = [
     return _c("tr", [
       _c("th", { attrs: { width: "200", colspan: "2" } }, [
         _vm._v(
-          "\r\n                              Site ID \r\n                             \r\n                            "
+          "\r\n                              Site ID                              \r\n                            "
         )
       ]),
       _vm._v(" "),
